@@ -21,7 +21,7 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu: any = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
@@ -67,7 +67,7 @@ function Navbar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="warning" // Set color to "inherit"
             >
               <MenuIcon />
             </IconButton>
@@ -75,7 +75,7 @@ function Navbar() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: 'bottom',
+                vertical: 'top',
                 horizontal: 'left',
               }}
               keepMounted
@@ -87,6 +87,7 @@ function Navbar() {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: 'block', md: 'none' },
+                top: '56px', // Adjust the top position as needed
               }}
             >
               {pages.map((page) => (
@@ -109,7 +110,6 @@ function Navbar() {
             component={Link}
             to="/"
             sx={{
-              mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
               fontFamily: 'monospace',
@@ -153,9 +153,19 @@ function Navbar() {
                 </Typography>
               </IconButton>
             </Tooltip>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-accbar"
+              aria-haspopup="true"
+              onClick={handleOpenUserMenu}
+              color="success" // Set color to "inherit"
+            >
+              <MenuIcon />
+            </IconButton>
             <Menu
               sx={{ mt: '45px' }}
-              id="menu-appbar"
+              id="menu-accbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: 'top',
