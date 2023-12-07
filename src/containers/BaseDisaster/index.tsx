@@ -1,10 +1,16 @@
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import { Grid, useMediaQuery, Box, Button } from '@mui/material';
+import { Grid, useMediaQuery, Box, Button, Card, CardContent, List, ListItem, ListItemText, Chip } from '@mui/material';
 
 
 const MyComponent = () => {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
+
+  const chipStyle = {
+    backgroundColor: 'white',
+    color: '#9C27B0',
+    border: '1px solid #9C27B0',
+  };
 
   return (
     <Paper elevation={0} sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
@@ -53,14 +59,57 @@ const MyComponent = () => {
           </Button>
         )}
         {/* Render the button underneath texts for mobile */}
-      {isSmallScreen && (
+        {isSmallScreen && (
           <Button variant="contained" style={{ backgroundColor: "#9C27B0" }}>
             Laporkan
           </Button>
-      )}
+        )}
       </Box>
 
-      
+      {/* New section with 1:1 split - Card and List of Chips */}
+      <Grid container mt={2} spacing={2}>
+        {/* Left side - Card */}
+        <Grid item xs={12} md={6}>
+          <Card>
+            {/* Change Card Title into Image */}
+            <img
+              src="BencanaCard.png"  // Replace with your image URL
+              alt="card-image"
+              style={{ width: '100%', height: 'auto' }}
+            />
+            <CardContent>
+              {/* Add content for the card */}
+              <Typography variant="body1">Card Content</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Right side - List of Chips */}
+        <Grid item xs={12} md={6}>
+          <List>
+            <Typography variant="h4">Langkah Pelaporan</Typography>
+            <ListItem>
+              <ListItemText>
+                <Chip label="Category 1" style={chipStyle} />
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>
+                <Chip label="Category 2" style={chipStyle} />
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>
+                <Chip label="Category 3"  style={chipStyle} />
+              </ListItemText>
+            </ListItem>
+            {/* Add more ListItem components for additional chips */}
+          </List>
+        </Grid>
+      </Grid>
+
+
+
     </Paper>
   );
 };
