@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Grid, useMediaQuery, Box, Button, Card, CardContent, List, ListItem, ListItemText, Chip } from '@mui/material';
 
 
-const BaseDisaster = () => {
+const BaseMedical = () => {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
 
   const chipStyle = {
@@ -114,4 +114,4 @@ const BaseDisaster = () => {
   );
 };
 
-export default BaseDisaster;
+export default BaseMedical;

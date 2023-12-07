@@ -5,6 +5,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import {HomePage, AuthLogoutPage, AuthLoginPage, AuthRegisterPage, BaseDisasterPage} from './pages';
 import { SettingsProvider } from './contexts/SettingProvider';
+import BaseFirefighterPage from './pages/BaseFirefighterPage';
+import BaseMedicalPage from './pages/BaseMedicalPage';
+import BasePolicePage from './pages/BasePolicePage';
 
 function App() {
   const router = createBrowserRouter([
@@ -34,6 +37,18 @@ function App() {
         {
           path: '/bencana',
           element: <BaseDisasterPage />,
+        },
+        {
+          path: '/damkar',
+          element: <BaseFirefighterPage />,
+        },
+        {
+          path: '/poliklinik',
+          element: <BaseMedicalPage />,
+        },
+        {
+          path: '/polisi',
+          element: <BasePolicePage />,
         },
       ],
     },
