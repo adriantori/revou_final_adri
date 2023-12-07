@@ -3,7 +3,7 @@ import { PublicLayout } from './layouts';
 import { NotificationContext, AppProvider } from './contexts';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import {HomePage, AuthLogoutPage, AuthLoginPage, AuthRegisterPage} from './pages';
+import {HomePage, AuthLogoutPage, AuthLoginPage, AuthRegisterPage, BaseDisasterPage} from './pages';
 import { SettingsProvider } from './contexts/SettingProvider';
 
 function App() {
@@ -30,6 +30,10 @@ function App() {
         {
           path: '/register',
           element: <AuthRegisterPage />,
+        },
+        {
+          path: '/bencana',
+          element: <BaseDisasterPage />,
         },
       ],
     },
