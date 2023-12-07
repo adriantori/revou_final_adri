@@ -3,7 +3,7 @@ import { PublicLayout } from './layouts';
 import { NotificationContext, AppProvider } from './contexts';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import {HomePage, AuthLogoutPage} from './pages';
+import {HomePage, AuthLogoutPage, AuthLoginPage, AuthRegisterPage} from './pages';
 import { SettingsProvider } from './contexts/SettingProvider';
 
 function App() {
@@ -22,6 +22,14 @@ function App() {
         {
           path: '/homepage',
           element: <AuthLogoutPage />,
+        },
+        {
+          path: '/login',
+          element: <AuthLoginPage />,
+        },
+        {
+          path: '/register',
+          element: <AuthRegisterPage />,
         },
       ],
     },

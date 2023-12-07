@@ -137,11 +137,10 @@ function Navbar() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, display: { xs: 'none', md: 'flex' } }}>
                 <Typography
                   sx={{
                     mr: 2,
-                    display: { xs: 'none', md: 'flex' },
                     fontFamily: 'monospace',
                     fontWeight: 700,
                     letterSpacing: '.1rem',
@@ -159,7 +158,8 @@ function Navbar() {
               aria-controls="menu-accbar"
               aria-haspopup="true"
               onClick={handleOpenUserMenu}
-              color="success" // Set color to "inherit"
+              color="success"
+              sx={{ display: { xs: 'flex', md: 'none' } }}
             >
               <MenuIcon />
             </IconButton>
