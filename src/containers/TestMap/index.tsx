@@ -2,11 +2,6 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
-interface GeoapifyComponent {
-  name: string;
-  // Add other properties if needed based on the API response
-}
-
 interface Location {
   latitude: number;
   longitude: number;
@@ -25,13 +20,14 @@ const LocationButton: React.FC = () => {
 
           // Fetch location information using Geoapify Geocoding API
           const geoapifyResponse = await fetch(
-            `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=129f4bd37070475d9084f2d990f031a1`
+            `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=129f4bd37070475d9084f2d990f031a1&lang=id`
           );
           const geoapifyData = await geoapifyResponse.json();
 
+          console.log('Geoapify API Response:', geoapifyData);
+
           // Extract full address and province information
-          const addressComponents: GeoapifyComponent[] = geoapifyData.features[0]?.properties?.address?.components || [];
-          const fullAddress = addressComponents.map((component) => component.name).join(', ');
+          const fullAddress = geoapifyData.features[0]?.properties?.formatted || 'Unknown Address';
           const province = geoapifyData.features[0]?.properties?.state || 'Unknown Province';
 
           setLocation({ latitude, longitude, fullAddress, province });
@@ -59,12 +55,27 @@ const LocationButton: React.FC = () => {
           <p>Latitude: {location.latitude}</p>
           <p>Longitude: {location.longitude}</p>
 
-          <Box style={{ height: '400px', width: '400px', position: 'relative', overflow: 'hidden' }}>
+          <Box style={{ position: 'relative', overflow: 'hidden', width: '300px', height: '300px' }}>
             <img
               src={`https://maps.geoapify.com/v1/staticmap?style=carto&width=400&height=400&center=lonlat:${location.longitude},${location.latitude}&zoom=13&apiKey=129f4bd37070475d9084f2d990f031a1`}
               alt="Map"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
+
+            {/* Marker */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '20px',
+                height: '20px',
+                background: 'red',
+                borderRadius: '50%',
+                border: '2px solid white',
+              }}
+            ></div>
           </Box>
         </div>
       )}
@@ -72,7 +83,7 @@ const LocationButton: React.FC = () => {
   );
 };
 
-function App() {
+function TestMap() {
   return (
     <div className="App">
       <header className="App-header">
@@ -83,4 +94,4 @@ function App() {
   );
 }
 
-export default App;
+export default TestMap;
