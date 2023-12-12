@@ -17,10 +17,9 @@ const BaseFirefighter = () => {
       <Grid container>
         {/* Left side (Title and Text) */}
         <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 2 }}>
-          <Typography variant="h3" sx={{ color: 'purple' }}>What Is DAMKAR?</Typography>
+          <Typography variant="h3" sx={{ color: 'purple' }}>Apa Itu DAMKAR?</Typography>
           <Typography variant={isSmallScreen ? 'body1' : 'h5'}>
-            The disaster hotline is a special phone service used during emergencies like floods, storms, or other large-scale disasters. It's a number you can call to get help, information, or report dangerous situations during these tough times. Trained experts are ready on the other end of the line to listen to your concerns and guide you on what to do to stay safe. Whether it's for getting help or sharing important details about the disaster, the hotline is there to assist people affected by these tough situations.
-          </Typography>
+          DAMKAR, atau Pemadam Kebakaran, adalah lembaga kritis dalam menjaga keselamatan masyarakat dari ancaman kebakaran dan bencana terkait. Dengan fokus pada respons cepat dan pencegahan, DAMKAR memiliki peran utama dalam melindungi nyawa dan harta benda.          </Typography>
         </Grid>
 
         {/* Right side (Image) */}
@@ -50,7 +49,7 @@ const BaseFirefighter = () => {
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: isSmallScreen ? 'flex-start' : 'flex-start', marginRight: isSmallScreen ? 0 : 'auto', mb: isSmallScreen ? 1 : 0 }}>
-          <Typography variant="body1" style={{ color: "#6D107D" }}>SEGERA LAPORKAN BILA TERJADI BENCANA</Typography>
+          <Typography variant="body1" style={{ color: "#6D107D" }}>SEGERA LAPORKAN BILA TERJADI BENCANA: Hubungi 113</Typography>
           <Typography variant="body2" style={{ color: "#6D107D" }}>Lakukanlah pelaporan bila terjadi kebakaran sesuai dengan prosedurnya, dan petugas akan datang secepatnya.</Typography>
         </Box>
         {!isSmallScreen && (
@@ -90,17 +89,27 @@ const BaseFirefighter = () => {
             <Typography variant="h4">Langkah Pelaporan</Typography>
             <ListItem>
               <ListItemText>
-                <Chip label="Category 1" style={chipStyle} />
+                <Chip label="Hubungi Hotline DAMKAR yang tersedia." style={chipStyle} />
               </ListItemText>
             </ListItem>
             <ListItem>
               <ListItemText>
-                <Chip label="Category 2" style={chipStyle} />
+                <Chip label="Sampaikan informasi lengkap tentang kejadian, termasuk lokasi dan jenis insiden." style={chipStyle} />
               </ListItemText>
             </ListItem>
             <ListItem>
               <ListItemText>
-                <Chip label="Category 3"  style={chipStyle} />
+                <Chip label="Koordinasikan dengan otoritas setempat untuk respons yang lebih cepat dan efektif."  style={chipStyle} />
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>
+                <Chip label="Ikuti petunjuk DAMKAR untuk tindakan awal sebelum bantuan tiba."  style={chipStyle} />
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>
+                <Chip label="Pastikan pelaporan dilakukan dengan cepat dan akurat."  style={chipStyle} />
               </ListItemText>
             </ListItem>
             {/* Add more ListItem components for additional chips */}
