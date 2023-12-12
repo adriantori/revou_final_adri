@@ -23,10 +23,6 @@
                     "value": "no-referrer"
                 },
                 {
-                    "key": "Permissions-Policy",
-                    "value": "geolocation=(), microphone=(), camera=()"
-                },
-                {
                     "key": "X-DNS-Prefetch-Control",
                     "value": "on"
                 },
