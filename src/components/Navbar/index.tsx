@@ -14,7 +14,7 @@ import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { useSettings } from '../../contexts/SettingProvider';
 import { Link } from 'react-router-dom';
 
-const pages = ['Bencana', 'DAMKAR', 'Polisi', 'Poliklinik'];
+const pages = ['Bencana', 'DAMKAR', 'Polisi', 'Poliklinik', 'testmap'];
 
 function Navbar() {
   const { settings } = useSettings();
