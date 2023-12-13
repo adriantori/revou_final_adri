@@ -26,6 +26,9 @@ export default function SignUp() {
     const [nik, setNIK] = useState('');
     const [telepon, setTelepon] = useState('');
     const [name, setName] = useState('');
+    const [bio, setBio] = useState('');
+    const [nostr, setNostr] = useState('');
+    const [lokasi, setLokasi] = useState('');
 
 
     const handleChange = (event: { target: { value: React.SetStateAction<string | null>; }; }) => {
@@ -37,6 +40,17 @@ export default function SignUp() {
         setNIK(newNIK);
     };
 
+    const handleBioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBio(event.target.value);
+    };
+    
+    const handleNostrChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNostr(event.target.value);
+    };
+    
+    const handleLokasiChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setLokasi(event.target.value);
+    };
 
     const handleTeleponChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newTelepon: string = event.target.value;
@@ -112,12 +126,92 @@ export default function SignUp() {
             );
         } else if (role === '2') { // Render additional fields for 'Dokter'
             return (
+                <>
                 <Grid item xs={12}>
                     {/* Additional fields for 'Dokter' */}
                     <TextField
-                    // ... other props
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="name"
+                        label="Nama"
+                        name="name"
+                        autoComplete="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        margin="normal"
+                        fullWidth
+                        id="email"
+                        label="Email Untuk Dihubungi"
+                        name="email"
+                        autoComplete="email"
+                        value={email}
+                        onChange={handleEmailChange}
+                        onBlur={validateEmail}
+                        error={!!emailError}
+                        helperText={emailError}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        margin="normal"
+                        fullWidth
+                        name="telepon"
+                        label="Telepon Untuk Dihubungi"
+                        type="tel"
+                        id="telepon"
+                        autoComplete="tel"
+                        value={telepon}
+                        onChange={handleTeleponChange}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="bio"
+                        label="Bio"
+                        type="text"
+                        id="bio"
+                        autoComplete="bio"
+                        value={bio}
+                        onChange={handleBioChange}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="nostr"
+                        label="No. STR"
+                        type="text"
+                        id="nostr"
+                        autoComplete="nostr"
+                        value={nostr}
+                        onChange={handleNostrChange}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="lokasi"
+                        label="Lokasi Praktek"
+                        type="text"
+                        id="lokasi"
+                        autoComplete="lokasi"
+                        value={lokasi}
+                        onChange={handleLokasiChange}
+                    />
+                </Grid>
+            </>
             );
         }
 
@@ -169,8 +263,8 @@ export default function SignUp() {
             email,
             password,
             role,
-            ...(role === '1' && { telepon }), // Only include telepon if role is '2' (Dokter)
-            ...(role === '1' && { nik }), // Only include telepon if role is '2' (Dokter)
+            ...(role === '1' && { telepon, nik }), // Include telepon and nik if role is 'Pelapor'
+        ...(role === '2' && { telepon, bio, nostr, lokasi }), // Include doctor-specific fields if role is 'Dokter'
         });
     };
 
