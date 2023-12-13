@@ -22,10 +22,30 @@ export default function SignUp() {
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [passwordStrengthError, setPasswordStrengthError] = React.useState('');
     const [emailError, setEmailError] = useState('');
-    const [role, setrole] = useState('1');
+    const [role, setRole] = useState<string | null>(null); // Explicitly define the type
+    const [nik, setNIK] = useState('');
+    const [telepon, setTelepon] = useState('');
+    const [name, setName] = useState('');
 
-    const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setrole(event.target.value);
+
+    const handleChange = (event: { target: { value: React.SetStateAction<string | null>; }; }) => {
+        setRole(event.target.value);
+    };
+
+    const handleNIKChange = (event: { target: { value: string }; }) => {
+        const newNIK = event.target.value;
+        setNIK(newNIK);
+    };
+
+
+    const handleTeleponChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newTelepon: string = event.target.value;
+
+        // Validate phone number (add your own criteria)
+        const phoneRegex = /^[0-9\b]+$/;
+        if (phoneRegex.test(newTelepon) || newTelepon === '') {
+            setTelepon(newTelepon);
+        }
     };
 
     const handleEmailChange = (event: { target: { value: React.SetStateAction<string> } }) => {
@@ -36,11 +56,72 @@ export default function SignUp() {
         // Regular expression for a valid email address
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!emailRegex.test(email)) {
+        if (email && !emailRegex.test(email)) {
             setEmailError('Invalid email format');
         } else {
             setEmailError('');
         }
+    };
+
+    const renderAdditionalFields = () => {
+        if (role === '1') { // Render additional fields for 'Relawan'
+            return (
+                <>
+                    <Grid item xs={12}>
+                        {/* Additional fields for 'Relawan' */}
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            label="Nama"
+                            name="name"
+                            autoComplete="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="nik"
+                            label="NIK"
+                            name="nik"
+                            autoComplete="nik"
+                            value={nik}
+                            onChange={handleNIKChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="telepon"
+                            label="Telepon"
+                            type="tel"
+                            id="telepon"
+                            autoComplete="tel"
+                            value={telepon}
+                            onChange={handleTeleponChange}
+                        />
+                    </Grid>
+                </>
+            );
+        } else if (role === '2') { // Render additional fields for 'Dokter'
+            return (
+                <Grid item xs={12}>
+                    {/* Additional fields for 'Dokter' */}
+                    <TextField
+                    // ... other props
+                    />
+                </Grid>
+            );
+        }
+
+        return null; // No additional fields for other roles
     };
 
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +130,7 @@ export default function SignUp() {
 
         // Check for password strength (add your own criteria)
         if (newPassword.length < 6) {
-            setPasswordStrengthError('Password must be at least 6 characters long.');
+            setPasswordStrengthError('Password harus 6 karakter atau lebih.');
         } else {
             setPasswordStrengthError('');
         }
@@ -58,32 +139,41 @@ export default function SignUp() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         validateEmail();
+
         // Check if password and confirmPassword match
         if (password !== confirmPassword) {
             alert('Password and Confirm Password must match.');
             return;
         }
 
-        // Check for password strength (add your own criteria)
+        // Check for password strength
         if (password.length < 6) {
             alert('Password must be at least 6 characters long.');
             return;
         }
-        // Wait for email validation before proceeding
-        await new Promise((resolve) => setTimeout(resolve, 0));
 
         // Check if there are any errors before submitting the form
-        if (!emailError) {
-            console.log({
-                email,
-                password,
-                role
-            });
+        if (emailError) {
+            alert('Please fix the email error before submitting.');
+            return;
+        }
+        
+        if (role === '1' && (nik.length !== 16 || !/^\d+$/.test(nik))) {
+            alert('NIK harus 16 angka');
+            return;
         }
 
         // Form is valid, proceed with submission
-
+        console.log({
+            name,
+            email,
+            password,
+            role,
+            ...(role === '1' && { telepon }), // Only include telepon if role is '2' (Dokter)
+            ...(role === '1' && { nik }), // Only include telepon if role is '2' (Dokter)
+        });
     };
+
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -117,10 +207,11 @@ export default function SignUp() {
                                     autoFocus
                                     value={email}
                                     onChange={handleEmailChange}
-                                    onBlur={validateEmail}
+                                    onBlur={validateEmail}  // Trigger validation on blur
                                     error={!!emailError}
                                     helperText={emailError}
                                 />
+
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -156,9 +247,12 @@ export default function SignUp() {
                                     onChange={handleChange}
                                     row
                                 >
-                                    <FormControlLabel value="1" control={<Radio />} label="Relawan" />
+                                    <FormControlLabel value="1" control={<Radio />} label="Pelapor" />
                                     <FormControlLabel value="2" control={<Radio />} label="Dokter" />
                                 </RadioGroup>
+                            </Grid>
+                            <Grid item xs={12}>
+                                {renderAdditionalFields()}
                             </Grid>
                         </Grid>
                         {passwordStrengthError && (
@@ -185,5 +279,5 @@ export default function SignUp() {
                 </Box>
             </Container>
         </ThemeProvider>
-    );                                                                                                                                                                                                                  
+    );
 }

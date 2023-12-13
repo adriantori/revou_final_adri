@@ -27,7 +27,7 @@ export default function AuthLogin() {
         // Regular expression for a valid email address
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!emailRegex.test(email)) {
+        if (email && !emailRegex.test(email)) {
             setEmailError('Invalid email format');
         } else {
             setEmailError('');
@@ -82,10 +82,11 @@ export default function AuthLogin() {
                             autoFocus
                             value={email}
                             onChange={handleEmailChange}
-                            onBlur={validateEmail}
+                            onBlur={validateEmail}  // Trigger validation on blur
                             error={!!emailError}
                             helperText={emailError}
                         />
+
                         <TextField
                             margin="normal"
                             required
