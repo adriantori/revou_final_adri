@@ -13,13 +13,34 @@ import MenuItem from '@mui/material/MenuItem';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { useSettings } from '../../contexts/SettingProvider';
 import { Link } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
 
-const pages = ['Bencana', 'DAMKAR', 'Polisi', 'Poliklinik', 'testmap'];
+const commonPages = ['Bencana', 'DAMKAR', 'Polisi', 'Poliklinik', 'testmap'];
+const mobilePages = ['Dokter', 'Laporkan']; // Additional pages for mobile view
+
 
 function Navbar() {
   const { settings } = useSettings();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+  const [pages, setPages] = React.useState([...commonPages]);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setPages([...commonPages, ...(window.innerWidth < 600 ? mobilePages : [])]);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Initial setup
+    handleResize();
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -135,10 +156,59 @@ function Navbar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, display: 'flex' }}>
+            {/* Avatar (Mobile Only) */}
+            <IconButton
+              size="large"
+              sx={{
+                display: { xs: 'flex', md: 'none' },
+                p: 0,
+              }}
+              onClick={handleOpenUserMenu}
+            >
+              <Avatar />
+            </IconButton>
+
+            {/* Dokter and Laporkan Buttons (Desktop Only) */}
+            <Box
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                alignItems: 'center',
+              }}
+            >
+              <IconButton size="large" aria-label="Dokter" sx={{ p: 0 }}>
+                <Button
+                  sx={{
+                    fontFamily: 'monospace',
+                    fontWeight: 700,
+                    letterSpacing: '.1rem',
+                    color: 'green',
+                    textDecoration: 'none',
+                  }}
+                >
+                  Dokter
+                </Button>
+              </IconButton>
+
+              <IconButton size="large" aria-label="Laporkan" sx={{ p: 0 }}>
+                <Button
+                  sx={{
+                    fontFamily: 'monospace',
+                    fontWeight: 700,
+                    letterSpacing: '.1rem',
+                    color: 'green',
+                    textDecoration: 'none',
+                  }}
+                >
+                  Laporkan
+                </Button>
+              </IconButton>
+            </Box>
+
+            {/* Account Button (Desktop Only) */}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, display: { xs: 'none', md: 'flex' } }}>
-                <Typography
+                <Button
                   sx={{
                     mr: 2,
                     fontFamily: 'monospace',
@@ -149,20 +219,11 @@ function Navbar() {
                   }}
                 >
                   Account
-                </Typography>
+                </Button>
               </IconButton>
             </Tooltip>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-accbar"
-              aria-haspopup="true"
-              onClick={handleOpenUserMenu}
-              color="success"
-              sx={{ display: { xs: 'flex', md: 'none' } }}
-            >
-              <MenuIcon />
-            </IconButton>
+
+            {/* User Menu */}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-accbar"
@@ -192,6 +253,7 @@ function Navbar() {
               ))}
             </Menu>
           </Box>
+
         </Toolbar>
       </Container>
     </AppBar>
