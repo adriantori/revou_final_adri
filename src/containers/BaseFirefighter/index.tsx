@@ -19,7 +19,8 @@ const BaseFirefighter = () => {
         <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 2 }}>
           <Typography variant="h3" sx={{ color: 'purple' }}>Apa Itu DAMKAR?</Typography>
           <Typography variant={isSmallScreen ? 'body1' : 'h5'}>
-          DAMKAR, atau Pemadam Kebakaran, adalah lembaga kritis dalam menjaga keselamatan masyarakat dari ancaman kebakaran dan bencana terkait. Dengan fokus pada respons cepat dan pencegahan, DAMKAR memiliki peran utama dalam melindungi nyawa dan harta benda.          </Typography>
+            DAMKAR, atau Pemadam Kebakaran, adalah lembaga kritis dalam menjaga keselamatan masyarakat dari ancaman kebakaran dan bencana terkait. Dengan fokus pada respons cepat dan pencegahan, DAMKAR memiliki peran utama dalam melindungi nyawa dan harta benda.          
+          </Typography>
         </Grid>
 
         {/* Right side (Image) */}
