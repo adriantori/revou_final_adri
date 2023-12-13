@@ -196,7 +196,7 @@ function Navbar() {
                     fontFamily: 'monospace',
                     fontWeight: 700,
                     letterSpacing: '.1rem',
-                    color: 'green',
+                    color: 'red',
                     textDecoration: 'none',
                   }}
                 >
@@ -214,11 +214,11 @@ function Navbar() {
                     fontFamily: 'monospace',
                     fontWeight: 700,
                     letterSpacing: '.1rem',
-                    color: 'green',
+                    color: 'black',
                     textDecoration: 'none',
                   }}
                 >
-                  Account
+                  Akun
                 </Button>
               </IconButton>
             </Tooltip>
