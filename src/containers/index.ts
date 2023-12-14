@@ -7,4 +7,5 @@ export { default as BaseFirefighter } from './BaseFirefighter';
 export { default as BaseMedical } from './BaseMedical';
 export { default as BasePolice } from './BasePolice';
 export { default as DoctorList } from './DoctorList';
+export { default as DisasterList } from './DisasterList';
 export { default as TestMap } from './TestMap';

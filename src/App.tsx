@@ -4,7 +4,7 @@ import { NotificationContext, AppProvider } from './contexts';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import {HomePage, AuthLogoutPage, AuthLoginPage, AuthRegisterPage, BaseDisasterPage, TestMapPage, BaseFirefighterPage,
-BaseMedicalPage, BasePolicePage, DoctorListPage} from './pages';
+BaseMedicalPage, BasePolicePage, DoctorListPage, DisasterListPage} from './pages';
 import { SettingsProvider } from './contexts/SettingProvider';
 
 function App() {
@@ -51,6 +51,10 @@ function App() {
         {
           path: '/dokter',
           element: <DoctorListPage />,
+        },
+        {
+          path: '/laporkan',
+          element: <DisasterListPage />,
         },
         {
           path: '/testmap',
