@@ -119,6 +119,10 @@ function DoctorList() {
                   sx={{
                     background: 'blue',
                     color: 'white',
+                    ':hover': {
+                      bgcolor: 'green', // theme.palette.primary.main
+                      color: 'white',
+                    },
                   }}
                 >
                   <Typography>Cek Detail</Typography>
