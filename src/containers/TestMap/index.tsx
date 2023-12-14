@@ -1,12 +1,12 @@
-import { MapComponent, ImageUploadComponent } from "../../components";
+// import { MapComponent, ImageUploadComponent } from "../../components";
 
 const TestMap: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Location App</h1>
-        <MapComponent />
-        <ImageUploadComponent />
+        <h1>Test disabled</h1>
+        {/* <MapComponent />
+        <ImageUploadComponent /> */}
       </header>
     </div>
   );
