@@ -264,7 +264,7 @@ export default function SignUp() {
             password,
             role,
             ...(role === '1' && { telepon, nik }), // Include telepon and nik if role is 'Pelapor'
-        ...(role === '2' && { telepon, bio, nostr, lokasi }), // Include doctor-specific fields if role is 'Dokter'
+            ...(role === '2' && { telepon, bio, nostr, lokasi }), // Include doctor-specific fields if role is 'Dokter'
         });
     };
 

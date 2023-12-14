@@ -3,11 +3,9 @@ import { PublicLayout } from './layouts';
 import { NotificationContext, AppProvider } from './contexts';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import {HomePage, AuthLogoutPage, AuthLoginPage, AuthRegisterPage, BaseDisasterPage, TestMapPage} from './pages';
+import {HomePage, AuthLogoutPage, AuthLoginPage, AuthRegisterPage, BaseDisasterPage, TestMapPage, BaseFirefighterPage,
+BaseMedicalPage, BasePolicePage, DoctorListPage} from './pages';
 import { SettingsProvider } from './contexts/SettingProvider';
-import BaseFirefighterPage from './pages/BaseFirefighterPage';
-import BaseMedicalPage from './pages/BaseMedicalPage';
-import BasePolicePage from './pages/BasePolicePage';
 
 function App() {
   const router = createBrowserRouter([
@@ -49,6 +47,10 @@ function App() {
         {
           path: '/polisi',
           element: <BasePolicePage />,
+        },
+        {
+          path: '/dokter',
+          element: <DoctorListPage />,
         },
         {
           path: '/testmap',

@@ -59,7 +59,7 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static" sx={{ background: 'white', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)' }}>
+    <AppBar position="static" sx={{ background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <MonitorHeartIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -177,31 +177,41 @@ function Navbar() {
               }}
             >
               <IconButton size="large" aria-label="Dokter" sx={{ p: 0 }}>
-                <Button
-                  sx={{
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    letterSpacing: '.1rem',
-                    color: 'green',
-                    textDecoration: 'none',
-                  }}
+              <Link
+                  to={`/dokter`}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
                 >
-                  Dokter
-                </Button>
+                  <Typography
+                    sx={{
+                      fontFamily: 'monospace',
+                      fontWeight: 700,
+                      letterSpacing: '.1rem',
+                      color: 'green',
+                      textDecoration: 'none',
+                      marginRight: 2
+                    }}>
+                    DOKTER
+                  </Typography>
+                </Link>
               </IconButton>
 
               <IconButton size="large" aria-label="Laporkan" sx={{ p: 0 }}>
-                <Button
-                  sx={{
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    letterSpacing: '.1rem',
-                    color: 'red',
-                    textDecoration: 'none',
-                  }}
+                <Link
+                  to={`/laporkan`}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
                 >
-                  Laporkan
-                </Button>
+                  <Typography
+                    sx={{
+                      fontFamily: 'monospace',
+                      fontWeight: 700,
+                      letterSpacing: '.1rem',
+                      color: 'red',
+                      textDecoration: 'none',
+                    }}>
+                    LAPORKAN
+                  </Typography>
+
+                </Link>
               </IconButton>
             </Box>
 
