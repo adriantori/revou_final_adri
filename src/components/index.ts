@@ -1,3 +1,5 @@
 export { default as Footer } from './Footer'
 export { default as Navbar } from './Navbar'
 export { default as CustomDivider } from './CustomDivider'
+export { default as MapComponent } from './MapComponent'
+export { default as ImageUploadComponent } from './ImageUploadComponent'
