@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
@@ -9,7 +9,11 @@ interface Location {
   province: string;
 }
 
-const MapComponent: React.FC = () => {
+interface MapComponentProps {
+  onLocationChange: (location: Location) => void;
+}
+
+const MapComponent: React.FC<MapComponentProps> = ({ onLocationChange }) => {
   const [location, setLocation] = useState<Location | null>(null);
 
   const handleClick = async () => {
@@ -30,8 +34,12 @@ const MapComponent: React.FC = () => {
           const fullAddress = geoapifyData.features[0]?.properties?.formatted || 'Unknown Address';
           const province = geoapifyData.features[0]?.properties?.state || 'Unknown Province';
 
-          setLocation({ latitude, longitude, fullAddress, province });
-          console.log('Current Location:', { latitude, longitude, fullAddress, province });
+          const newLocation: Location = { latitude, longitude, fullAddress, province };
+          setLocation(newLocation);
+          console.log('Current Location:', newLocation);
+
+          // Callback to parent component with location details
+          onLocationChange(newLocation);
         },
         (error) => {
           console.error('Error getting location:', error.message);
@@ -45,7 +53,7 @@ const MapComponent: React.FC = () => {
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClick}>
-        Get Current Location
+        Deteksi Lokasi Saat Ini
       </Button>
 
       {location && (
@@ -62,11 +70,10 @@ const MapComponent: React.FC = () => {
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </Box>
-          
         </div>
       )}
     </div>
   );
 };
 
-export default MapComponent
+export default MapComponent;
