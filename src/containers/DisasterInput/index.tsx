@@ -4,11 +4,11 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import jwt from 'jsonwebtoken';
-
-
-import { ImageUploadComponent, MapComponent } from '../../components';
 import { useNavigate } from 'react-router-dom';
+
+import { ImageUploadComponent, MapComponent, TokenDecoder } from '../../components';
+import { useNotification } from '../../contexts/NotificationContext';
+
 
 interface Location {
     latitude: number;
@@ -17,33 +17,41 @@ interface Location {
     province: string;
   }
 
-const SimpleForm = () => {
+const DisasterInput = () => {
     const [disasterTitle, setDisasterTitle] = useState('');
     const [description, setDescription] = useState('');
     const [donationLink, setDonationLink] = useState('');
     const [location, setLocation] = useState<{ latitude: number; longitude: number; fullAddress: string; province: string } | null>(null);
     const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
     const navigate = useNavigate();
+    const showNotification = useNotification();
 
     useEffect(() => {
-      // Run when the component mounts (page loads)
-  
-      // Retrieve the token from localStorage or wherever you've stored it
       const token = localStorage.getItem('token');
   
-      if (token) {
+      const fetchData = async () => {
         try {
-          // Decode the token
-          const decodedToken = jwt.decode(token);
+          if (token) {
+            const decoded = await TokenDecoder(token);
   
-          // The decodedToken will contain the decoded information
-          console.log(decodedToken);
-        } catch (error) {
-            console.error('Error decoding token:', error);
+            // The decodedToken will contain the decoded information
+            if (decoded?.role === 2) {
+              showNotification('error', 'Bikin Akun Pelapor Dulu Yaaa!', 'Login Gagal');
+              navigate('/register');
+            }
+          } else {
+            showNotification('error', 'Login Dulu Yaaa!', 'Login Gagal');
             navigate('/login');
+          }
+        } catch (error) {
+          console.error('Error decoding token:', error);
+          showNotification('error', 'Login Dulu Yaaa!', 'Login Gagal');
+          navigate('/login');
         }
-      }
-    }, [navigate]);
+      };
+  
+      fetchData();
+    }, [navigate, showNotification]);
     
   
     const handleImageUrlChange = (imageUrl: string | null) => {
@@ -97,4 +105,4 @@ const SimpleForm = () => {
     );
   };
   
-  export default SimpleForm;
+  export default DisasterInput;

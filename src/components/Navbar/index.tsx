@@ -176,43 +176,46 @@ function Navbar() {
                 alignItems: 'center',
               }}
             >
-              <IconButton size="large" aria-label="Dokter" sx={{ p: 0 }}>
-              <Link
-                  to={`/dokter`}
-                  style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                  <Typography
-                    sx={{
-                      fontFamily: 'monospace',
-                      fontWeight: 700,
-                      letterSpacing: '.1rem',
-                      color: 'green',
-                      textDecoration: 'none',
-                      marginRight: 2
-                    }}>
-                    DOKTER
-                  </Typography>
-                </Link>
+              <IconButton
+                component={Link}
+                to={`/dokter`}
+                size="large"
+                aria-label="Dokter"
+                sx={{ p: 0 }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: 'monospace',
+                    fontWeight: 700,
+                    letterSpacing: '.1rem',
+                    color: 'green',
+                    textDecoration: 'none',
+                    marginRight: 2
+                  }}>
+                  DOKTER
+                </Typography>
               </IconButton>
 
-              <IconButton size="large" aria-label="Laporkan" sx={{ p: 0 }}>
-                <Link
-                  to={`/laporkan`}
-                  style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                  <Typography
-                    sx={{
-                      fontFamily: 'monospace',
-                      fontWeight: 700,
-                      letterSpacing: '.1rem',
-                      color: 'red',
-                      textDecoration: 'none',
-                    }}>
-                    LAPORKAN
-                  </Typography>
 
-                </Link>
+              <IconButton
+                component={Link}
+                to={`/laporkan`}
+                size="large"
+                aria-label="Laporkan"
+                sx={{ p: 0 }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: 'monospace',
+                    fontWeight: 700,
+                    letterSpacing: '.1rem',
+                    color: 'red',
+                    textDecoration: 'none',
+                  }}>
+                  LAPORKAN
+                </Typography>
               </IconButton>
+
             </Box>
 
             {/* Account Button (Desktop Only) */}
