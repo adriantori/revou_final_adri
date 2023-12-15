@@ -18,6 +18,7 @@ interface Doctor {
   DOK_NOSTR: string;
   DOK_LOCATION: string;
   DOK_EXP: string;
+  DOK_IMAGE: string;
 }
 
 
@@ -37,6 +38,7 @@ const doctors: Doctor[] = [
     DOK_NOSTR: '007',
     DOK_LOCATION: 'City, Country',
     DOK_EXP: '10 years',
+    DOK_IMAGE: 'asd'
   },
   {
     DOK_ID: 2,
@@ -48,6 +50,7 @@ const doctors: Doctor[] = [
     DOK_NOSTR: '007',
     DOK_LOCATION: 'City, Country',
     DOK_EXP: '10 years',
+    DOK_IMAGE: 'asd'
   },
   // Add more doctors as needed
 ];
@@ -98,38 +101,51 @@ function DoctorList() {
   return (
     <Grid container spacing={2}>
       {doctors.map((doctor) => (
-        <Grid item xs={12} md={6} key={doctor.DOK_ID}>
-          <Paper elevation={5}>
-            <Card sx={{ minWidth: 275 }}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  {doctor.DOK_NAME}
-                </Typography>
-                <Typography color="text.secondary" gutterBottom>
-                  Email: {doctor.DOK_EMAIL}
-                </Typography>
-                <Typography color="text.secondary" gutterBottom>
-                  Telepon: {doctor.DOK_TELP}
-                </Typography>
-                <Typography color="text.secondary" gutterBottom>
-                  Lokasi: {doctor.DOK_LOCATION}
-                </Typography>
-                <Button
-                  onClick={() => handleOpenModal(doctor)}
-                  sx={{
-                    background: 'blue',
-                    color: 'white',
-                    ':hover': {
-                      bgcolor: 'green', // theme.palette.primary.main
+        <Grid container spacing={2} key={doctor.DOK_ID}>
+          {/* Image (4 columns) */}
+          <Grid item xs={12} md={4}>
+            {/* Replace this with your image component */}
+            <img
+              src={`path/to/your/image.jpg`}
+              alt={`Image for ${doctor.DOK_NAME}`}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </Grid>
+
+          {/* Text (8 columns) */}
+          <Grid item xs={12} md={8}>
+            <Paper elevation={5}>
+              <Card sx={{ minWidth: 275 }}>
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {doctor.DOK_NAME}
+                  </Typography>
+                  <Typography color="text.secondary" gutterBottom>
+                    Email: {doctor.DOK_EMAIL}
+                  </Typography>
+                  <Typography color="text.secondary" gutterBottom>
+                    Telepon: {doctor.DOK_TELP}
+                  </Typography>
+                  <Typography color="text.secondary" gutterBottom>
+                    Lokasi: {doctor.DOK_LOCATION}
+                  </Typography>
+                  <Button
+                    onClick={() => handleOpenModal(doctor)}
+                    sx={{
+                      background: 'blue',
                       color: 'white',
-                    },
-                  }}
-                >
-                  <Typography>Cek Detail</Typography>
-                </Button>
-              </CardContent>
-            </Card>
-          </Paper>
+                      ':hover': {
+                        bgcolor: 'green', // theme.palette.primary.main
+                        color: 'white',
+                      },
+                    }}
+                  >
+                    <Typography>Cek Detail</Typography>
+                  </Button>
+                </CardContent>
+              </Card>
+            </Paper>
+          </Grid>
         </Grid>
       ))}
 

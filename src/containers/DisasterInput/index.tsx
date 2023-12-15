@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import jwt from 'jsonwebtoken';
+
 
 import { ImageUploadComponent, MapComponent } from '../../components';
+import { useNavigate } from 'react-router-dom';
 
 interface Location {
     latitude: number;
@@ -20,6 +23,27 @@ const SimpleForm = () => {
     const [donationLink, setDonationLink] = useState('');
     const [location, setLocation] = useState<{ latitude: number; longitude: number; fullAddress: string; province: string } | null>(null);
     const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      // Run when the component mounts (page loads)
+  
+      // Retrieve the token from localStorage or wherever you've stored it
+      const token = localStorage.getItem('token');
+  
+      if (token) {
+        try {
+          // Decode the token
+          const decodedToken = jwt.decode(token);
+  
+          // The decodedToken will contain the decoded information
+          console.log(decodedToken);
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            navigate('/login');
+        }
+      }
+    }, [navigate]);
     
   
     const handleImageUrlChange = (imageUrl: string | null) => {

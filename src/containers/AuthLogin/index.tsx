@@ -11,6 +11,14 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useRef, useState } from 'react';
 
+import { baseUrl } from '../../configs/Constants'
+import { useNotification } from '../../contexts/NotificationContext';
+import { useSettings } from '../../contexts/SettingProvider';
+
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
@@ -18,6 +26,11 @@ export default function AuthLogin() {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const formRef = useRef<HTMLFormElement | null>(null);
+    const showNotification = useNotification();
+    const { updateSettings } = useSettings();
+    const navigate = useNavigate();
+
+
 
     const handleEmailChange = (event: { target: { value: React.SetStateAction<string> } }) => {
         setEmail(event.target.value);
@@ -49,6 +62,29 @@ export default function AuthLogin() {
                 password: formData.get('password'),
             });
             // Add your form submission logic here
+            try {
+                const response = await axios.post(`${baseUrl}/auth/login`, {
+                    user_email: formData.get('email'),
+                    user_pass: formData.get('password'),
+                });
+
+                const token = response.data?.data?.token;
+
+                if (token) {
+                    // Store the token in localStorage
+                    localStorage.setItem('token', token);
+                    const newSettings = ['Home', 'Profile', 'Logout'];
+                    updateSettings(newSettings);
+                }
+                // Add your additional logic here
+                showNotification('success','Login Sukses!', 'Login Sukses');
+                navigate('/');
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                showNotification('error','Login Gagal!', 'Login Gagal');
+                // Handle error as needed
+            }
         }
     };
 
