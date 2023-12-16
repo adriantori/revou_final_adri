@@ -12,24 +12,33 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import axios, { AxiosError } from 'axios';
+
+import { baseUrl } from '../../configs/Constants'
+import { useNavigate } from 'react-router-dom';
+import { useNotification } from '../../contexts/NotificationContext';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [user_email, setEmail] = useState('');
+    const [user_pass, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [passwordStrengthError, setPasswordStrengthError] = React.useState('');
     const [emailError, setEmailError] = useState('');
-    const [role, setRole] = useState<string | null>(null); // Explicitly define the type
-    const [nik, setNIK] = useState('');
-    const [telepon, setTelepon] = useState('');
+    const [role_id, setRole] = useState<string | null>(null); // Explicitly define the type
+    const [inf_nik, setNIK] = useState('');
+    const [inf_telp, setTelepon] = useState('');
     const [name, setName] = useState('');
     const [bio, setBio] = useState('');
     const [nostr, setNostr] = useState('');
     const [lokasi, setLokasi] = useState('');
-
+    const [spec, setSpec] = useState('');
+    const [emailContact, setEmailContact] = useState('');
+    const [experience, setExperience] = useState('');
+    const showNotification = useNotification();
+    const navigate = useNavigate();
 
     const handleChange = (event: { target: { value: React.SetStateAction<string | null>; }; }) => {
         setRole(event.target.value);
@@ -43,11 +52,15 @@ export default function SignUp() {
     const handleBioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setBio(event.target.value);
     };
-    
+
+    const handleExperienceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setExperience(event.target.value);
+    };
+
     const handleNostrChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNostr(event.target.value);
     };
-    
+
     const handleLokasiChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setLokasi(event.target.value);
     };
@@ -67,18 +80,18 @@ export default function SignUp() {
     };
 
     const validateEmail = () => {
-        // Regular expression for a valid email address
+        // Regular expression for a valid user_email address
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (email && !emailRegex.test(email)) {
-            setEmailError('Invalid email format');
+        if (user_email && !emailRegex.test(user_email)) {
+            setEmailError('Invalid user_email format');
         } else {
             setEmailError('');
         }
     };
 
     const renderAdditionalFields = () => {
-        if (role === '1') { // Render additional fields for 'Relawan'
+        if (role_id === '1') { // Render additional fields for 'Relawan'
             return (
                 <>
                     <Grid item xs={12}>
@@ -100,11 +113,11 @@ export default function SignUp() {
                             margin="normal"
                             required
                             fullWidth
-                            id="nik"
+                            id="inf_nik"
                             label="NIK"
-                            name="nik"
-                            autoComplete="nik"
-                            value={nik}
+                            name="inf_nik"
+                            autoComplete="inf_nik"
+                            value={inf_nik}
                             onChange={handleNIKChange}
                         />
                     </Grid>
@@ -113,105 +126,132 @@ export default function SignUp() {
                             margin="normal"
                             required
                             fullWidth
-                            name="telepon"
+                            name="inf_telp"
                             label="Telepon"
                             type="tel"
-                            id="telepon"
+                            id="inf_telp"
                             autoComplete="tel"
-                            value={telepon}
+                            value={inf_telp}
                             onChange={handleTeleponChange}
                         />
                     </Grid>
                 </>
             );
-        } else if (role === '2') { // Render additional fields for 'Dokter'
+        } else if (role_id === '2') { // Render additional fields for 'Dokter'
             return (
                 <>
-                <Grid item xs={12}>
-                    {/* Additional fields for 'Dokter' */}
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="name"
-                        label="Nama"
-                        name="name"
-                        autoComplete="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        margin="normal"
-                        fullWidth
-                        id="email"
-                        label="Email Untuk Dihubungi"
-                        name="email"
-                        autoComplete="email"
-                        value={email}
-                        onChange={handleEmailChange}
-                        onBlur={validateEmail}
-                        error={!!emailError}
-                        helperText={emailError}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        margin="normal"
-                        fullWidth
-                        name="telepon"
-                        label="Telepon Untuk Dihubungi"
-                        type="tel"
-                        id="telepon"
-                        autoComplete="tel"
-                        value={telepon}
-                        onChange={handleTeleponChange}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="bio"
-                        label="Bio"
-                        type="text"
-                        id="bio"
-                        autoComplete="bio"
-                        value={bio}
-                        onChange={handleBioChange}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="nostr"
-                        label="No. STR"
-                        type="text"
-                        id="nostr"
-                        autoComplete="nostr"
-                        value={nostr}
-                        onChange={handleNostrChange}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="lokasi"
-                        label="Lokasi Praktek"
-                        type="text"
-                        id="lokasi"
-                        autoComplete="lokasi"
-                        value={lokasi}
-                        onChange={handleLokasiChange}
-                    />
-                </Grid>
-            </>
+                    <Grid item xs={12}>
+                        {/* Additional fields for 'Dokter' */}
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            label="Nama"
+                            name="name"
+                            autoComplete="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        {/* Additional fields for 'Dokter' */}
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="spec"
+                            label="Spesialisasi"
+                            name="spec"
+                            autoComplete="spec"
+                            value={spec}
+                            onChange={(e) => setSpec(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            margin="normal"
+                            fullWidth
+                            id="emailContact"
+                            label="Email Untuk Dihubungi"
+                            name="emailContact"
+                            autoComplete="emailContact"
+                            value={emailContact}
+                            onChange={(e) => setEmailContact(e.target.value)}
+                            onBlur={validateEmail}
+                            error={!!emailError}
+                            helperText={emailError}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            margin="normal"
+                            fullWidth
+                            name="inf_telp"
+                            label="Telepon Untuk Dihubungi"
+                            type="tel"
+                            id="inf_telp"
+                            autoComplete="tel"
+                            value={inf_telp}
+                            onChange={handleTeleponChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            margin="normal"
+                            fullWidth
+                            name="bio"
+                            label="Bio"
+                            type="text"
+                            id="bio"
+                            autoComplete="bio"
+                            value={bio}
+                            onChange={handleBioChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="nostr"
+                            label="No. STR"
+                            type="text"
+                            id="nostr"
+                            autoComplete="nostr"
+                            value={nostr}
+                            onChange={handleNostrChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="lokasi"
+                            label="Lokasi Praktek"
+                            type="text"
+                            id="lokasi"
+                            autoComplete="lokasi"
+                            value={lokasi}
+                            onChange={handleLokasiChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="experience"
+                            label="Pengalaman Praktek (tahun)"
+                            type="number"
+                            id="experience"
+                            autoComplete="experience"
+                            value={experience}
+                            onChange={handleExperienceChange}
+                        />
+                    </Grid>
+                </>
             );
         }
 
@@ -222,7 +262,7 @@ export default function SignUp() {
         const newPassword = event.target.value;
         setPassword(newPassword);
 
-        // Check for password strength (add your own criteria)
+        // Check for user_pass strength (add your own criteria)
         if (newPassword.length < 6) {
             setPasswordStrengthError('Password harus 6 karakter atau lebih.');
         } else {
@@ -234,38 +274,87 @@ export default function SignUp() {
         event.preventDefault();
         validateEmail();
 
-        // Check if password and confirmPassword match
-        if (password !== confirmPassword) {
+        // Check if user_pass and confirmPassword match
+        if (user_pass !== confirmPassword) {
             alert('Password and Confirm Password must match.');
             return;
         }
 
-        // Check for password strength
-        if (password.length < 6) {
+        // Check for user_pass strength
+        if (user_pass.length < 6) {
             alert('Password must be at least 6 characters long.');
             return;
         }
 
         // Check if there are any errors before submitting the form
         if (emailError) {
-            alert('Please fix the email error before submitting.');
-            return;
-        }
-        
-        if (role === '1' && (nik.length !== 16 || !/^\d+$/.test(nik))) {
-            alert('NIK harus 16 angka');
+            alert('Please fix the user_email error before submitting.');
             return;
         }
 
-        // Form is valid, proceed with submission
-        console.log({
-            name,
-            email,
-            password,
-            role,
-            ...(role === '1' && { telepon, nik }), // Include telepon and nik if role is 'Pelapor'
-            ...(role === '2' && { telepon, bio, nostr, lokasi }), // Include doctor-specific fields if role is 'Dokter'
-        });
+        try {
+            if (role_id === '1') {
+                try {
+                    // Role 1 API call and data
+                    if (inf_nik.length !== 16 || !/^\d+$/.test(inf_nik)) {
+                        alert('NIK harus 16 angka');
+                        return;
+                    }
+
+                    const url = `${baseUrl}/informer/register`; // Replace with your actual API endpoint for role_id 1
+                    const inf_name = name
+                    const data = [{
+                        user_email,
+                        user_pass,
+                        role_id,
+                    },
+                    {
+                        inf_name,
+                        inf_nik,
+                        inf_telp,
+                    }];
+                    console.log(url, data)
+                    await axios.post(url, data);
+                    showNotification('success', 'Register Sukses! Login langsung yuk', 'Login Sukses');
+                    navigate('/login')
+                } catch (error: unknown) {
+                    const err = error as AxiosError
+                    showNotification('error', err.message, 'Login Sukses');
+                }
+
+            } else if (role_id === '2') {
+                // Role 2 API call and data
+                try {
+                    const url = `${baseUrl}/doctor/register`; // Replace with your actual API endpoint for role_id 2
+                    const data = {
+                        user_email,
+                        user_pass,
+                        role_id,
+                        name,
+                        spec,
+                        emailContact,
+                        inf_telp,
+                        bio,
+                        nostr,
+                        lokasi,
+                        experience,
+                    };
+
+                    await axios.post(url, data);
+                    showNotification('success', 'Register Sukses! Login langsung yuk', 'Login Sukses');
+                    navigate('/login')
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                } catch (error: unknown) {
+                    const err = error as AxiosError
+                    showNotification('error', err.message, 'Login Sukses');
+                }
+
+            }
+
+        } catch (error: unknown) {
+            const err = error as AxiosError
+            showNotification('error', err.message, 'Login Sukses');
+        }
     };
 
 
@@ -294,12 +383,12 @@ export default function SignUp() {
                                     margin="normal"
                                     required
                                     fullWidth
-                                    id="email"
+                                    id="user_email"
                                     label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
+                                    name="user_email"
+                                    autoComplete="user_email"
                                     autoFocus
-                                    value={email}
+                                    value={user_email}
                                     onChange={handleEmailChange}
                                     onBlur={validateEmail}  // Trigger validation on blur
                                     error={!!emailError}
@@ -311,12 +400,12 @@ export default function SignUp() {
                                 <TextField
                                     required
                                     fullWidth
-                                    name="password"
+                                    name="user_pass"
                                     label="Password"
                                     type="password"
-                                    id="password"
-                                    autoComplete="new-password"
-                                    value={password}
+                                    id="user_pass"
+                                    autoComplete="new-user_pass"
+                                    value={user_pass}
                                     onChange={handlePasswordChange}
                                 />
                             </Grid>
@@ -328,16 +417,16 @@ export default function SignUp() {
                                     label="Confirm Password"
                                     type="password"
                                     id="confirmPassword"
-                                    autoComplete="new-password"
+                                    autoComplete="new-user_pass"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <RadioGroup
-                                    aria-label="role"
-                                    name="role"
-                                    value={role}
+                                    aria-label="role_id"
+                                    name="role_id"
+                                    value={role_id}
                                     onChange={handleChange}
                                     row
                                 >
@@ -360,12 +449,12 @@ export default function SignUp() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign Up
+                            Daftar Akun
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
-                                    Already have an account? Sign in
+                                <Link href="/login" variant="body2">
+                                    Sudah ada akun? login yuk!
                                 </Link>
                             </Grid>
                         </Grid>
