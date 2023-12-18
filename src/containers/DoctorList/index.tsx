@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -7,6 +8,8 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+
+import { baseUrl } from '../../configs/Constants';
 
 interface Doctor {
   DOK_ID: number;
@@ -21,43 +24,28 @@ interface Doctor {
   DOK_IMAGE: string;
 }
 
-
 interface ModalContentProps {
   doctor: Doctor;
 }
 
-// Example array of doctors
-const doctors: Doctor[] = [
-  {
-    DOK_ID: 1,
-    DOK_NAME: 'Dr. John Doe',
-    DOK_SPEC: '-',
-    DOK_EMAIL: 'john.doe@example.com',
-    DOK_TELP: '123-456-7890',
-    DOK_BIO: '-',
-    DOK_NOSTR: '007',
-    DOK_LOCATION: 'City, Country',
-    DOK_EXP: '10 years',
-    DOK_IMAGE: 'asd'
-  },
-  {
-    DOK_ID: 2,
-    DOK_NAME: 'Dr. John Doe2',
-    DOK_SPEC: '-2',
-    DOK_EMAIL: 'john.doe@example.com',
-    DOK_TELP: '123-456-7890',
-    DOK_BIO: '-',
-    DOK_NOSTR: '007',
-    DOK_LOCATION: 'City, Country',
-    DOK_EXP: '10 years',
-    DOK_IMAGE: 'asd'
-  },
-  // Add more doctors as needed
-];
-
 function DoctorList() {
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/doctor/getAll`); // Update the endpoint accordingly
+        console.log(response)
+        setDoctors(response.data.doctors);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures the effect runs only once on mount
 
   const handleOpenModal = (doctor: Doctor) => {
     setSelectedDoctor(doctor);
@@ -101,54 +89,40 @@ function DoctorList() {
   return (
     <Grid container spacing={2}>
       {doctors.map((doctor) => (
-        <Grid container spacing={2} key={doctor.DOK_ID}>
-          {/* Image (4 columns) */}
-          <Grid item xs={12} md={4}>
-            {/* Replace this with your image component */}
-            <img
-              src={`path/to/your/image.jpg`}
-              alt={`Image for ${doctor.DOK_NAME}`}
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            />
-          </Grid>
-
-          {/* Text (8 columns) */}
-          <Grid item xs={12} md={8}>
-            <Paper elevation={5}>
-              <Card sx={{ minWidth: 275 }}>
-                <CardContent>
-                  <Typography variant="h5" component="div">
-                    {doctor.DOK_NAME}
-                  </Typography>
-                  <Typography color="text.secondary" gutterBottom>
-                    Email: {doctor.DOK_EMAIL}
-                  </Typography>
-                  <Typography color="text.secondary" gutterBottom>
-                    Telepon: {doctor.DOK_TELP}
-                  </Typography>
-                  <Typography color="text.secondary" gutterBottom>
-                    Lokasi: {doctor.DOK_LOCATION}
-                  </Typography>
-                  <Button
-                    onClick={() => handleOpenModal(doctor)}
-                    sx={{
-                      background: 'blue',
+        <Grid item xs={12} md={6} key={doctor.DOK_ID}>
+          <Paper elevation={5}>
+            <Card>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  {doctor.DOK_NAME}
+                </Typography>
+                <Typography color="text.secondary" gutterBottom>
+                  Email: {doctor.DOK_EMAIL}
+                </Typography>
+                <Typography color="text.secondary" gutterBottom>
+                  Telepon: {doctor.DOK_TELP}
+                </Typography>
+                <Typography color="text.secondary" gutterBottom>
+                  Lokasi: {doctor.DOK_LOCATION}
+                </Typography>
+                <Button
+                  onClick={() => handleOpenModal(doctor)}
+                  sx={{
+                    background: 'blue',
+                    color: 'white',
+                    ':hover': {
+                      bgcolor: 'green',
                       color: 'white',
-                      ':hover': {
-                        bgcolor: 'green', // theme.palette.primary.main
-                        color: 'white',
-                      },
-                    }}
-                  >
-                    <Typography>Cek Detail</Typography>
-                  </Button>
-                </CardContent>
-              </Card>
-            </Paper>
-          </Grid>
+                    },
+                  }}
+                >
+                  <Typography>Cek Detail</Typography>
+                </Button>
+              </CardContent>
+            </Card>
+          </Paper>
         </Grid>
       ))}
-
       {/* Modal for displaying doctor information */}
       <Modal open={isModalOpen} onClose={handleCloseModal}>
         <Paper elevation={5} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400 }}>
