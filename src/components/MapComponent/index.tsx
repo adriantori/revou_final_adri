@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import { Loading } from "../"
+import { useNotification } from '../../contexts/NotificationContext';
+
 
 interface Location {
   latitude: number;
@@ -15,9 +18,13 @@ interface MapComponentProps {
 
 const MapComponent: React.FC<MapComponentProps> = ({ onLocationChange }) => {
   const [location, setLocation] = useState<Location | null>(null);
+  const [loading, setLoading] = useState(false); // Initial loading state
+
+  const showNotification = useNotification();
 
   const handleClick = async () => {
     if (navigator.geolocation) {
+      setLoading(true);
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
@@ -28,27 +35,30 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationChange }) => {
           );
           const geoapifyData = await geoapifyResponse.json();
 
-          console.log('Geoapify API Response:', geoapifyData);
-
           // Extract full address and province information
           const fullAddress = geoapifyData.features[0]?.properties?.formatted || 'Unknown Address';
           const province = geoapifyData.features[0]?.properties?.state || 'Unknown Province';
 
           const newLocation: Location = { latitude, longitude, fullAddress, province };
           setLocation(newLocation);
-          console.log('Current Location:', newLocation);
 
           // Callback to parent component with location details
           onLocationChange(newLocation);
+          setLoading(false);
         },
         (error) => {
-          console.error('Error getting location:', error.message);
+          showNotification('error', `Lokasi Error: ${error.message}`, 'Gagal mendapatkan lokasi');
         }
       );
     } else {
-      console.error('Geolocation is not supported by this browser.');
+      showNotification('error', `Perangkat tidak didukung untuk pencarian lokasi`, 'Gagal mendapatkan lokasi');
     }
   };
+
+  if (loading) {
+    // If loading is true, render the Loading component
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -65,7 +75,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationChange }) => {
 
           <Box style={{ height: '300px', width: '300px', position: 'relative', overflow: 'hidden' }}>
             <img
-              src={`https://maps.geoapify.com/v1/staticmap?style=carto&width=400&height=400&center=lonlat:${location.longitude},${location.latitude}&zoom=13&apiKey=129f4bd37070475d9084f2d990f031a1&marker=lonlat:${location.longitude},${location.latitude};type:awesome;color:red`} 
+              src={`https://maps.geoapify.com/v1/staticmap?style=carto&width=400&height=400&center=lonlat:${location.longitude},${location.latitude}&zoom=13&apiKey=129f4bd37070475d9084f2d990f031a1&marker=lonlat:${location.longitude},${location.latitude};type:awesome;color:red`}
               alt="Map"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />

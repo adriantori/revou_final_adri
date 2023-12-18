@@ -313,7 +313,6 @@ export default function SignUp() {
                         inf_nik,
                         inf_telp,
                     }];
-                    console.log(url, data)
                     await axios.post(url, data);
                     showNotification('success', 'Register Sukses! Login langsung yuk', 'Login Sukses');
                     navigate('/login')

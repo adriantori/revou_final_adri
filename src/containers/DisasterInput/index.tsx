@@ -7,9 +7,9 @@ import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
-import { ImageUploadComponent, MapComponent } from '../../components';
+import { ImageUploadComponent, MapComponent, Loading } from '../../components';
 import { useNotification } from '../../contexts/NotificationContext';
-
+import axios from 'axios';
 
 interface Location {
   latitude: number;
@@ -17,6 +17,15 @@ interface Location {
   fullAddress: string;
   province: string;
 }
+
+interface FormData {
+  disasterTitle: string;
+  description: string;
+  donationLink: string;
+  location: Location | null;
+  uploadedImageUrl: string | null;
+}
+
 
 interface DecodedToken {
   email: string;
@@ -28,16 +37,21 @@ interface DecodedToken {
 }
 
 const DisasterInput = () => {
-  const [disasterTitle, setDisasterTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [donationLink, setDonationLink] = useState('');
-  const [location, setLocation] = useState<{ latitude: number; longitude: number; fullAddress: string; province: string } | null>(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false); // Initial loading state
+  const [formData, setFormData] = useState<FormData>({
+    disasterTitle: '',
+    description: '',
+    donationLink: '',
+    location: null,
+    uploadedImageUrl: null,
+  });
+
   const navigate = useNavigate();
   const showNotification = useNotification();
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -57,34 +71,72 @@ const DisasterInput = () => {
         console.error('Error decoding token useEffect:', error);
         showNotification('error', 'Login Dulu Yaaa!', 'Login Gagal');
         navigate('/login');
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [navigate, showNotification]);
 
-
-
-
-
   const handleImageUrlChange = (imageUrl: string | null) => {
-    setUploadedImageUrl(imageUrl);
+    setFormData((prevData) => ({
+      ...prevData,
+      uploadedImageUrl: imageUrl,
+    }));
   };
 
-  const handleLocationChange = (newLocation: Location) => {
-    setLocation(newLocation);
+  const handleLocationChange = (newLocation: Location | null) => {
+    if (newLocation) {
+      setFormData((prevData) => ({
+        ...prevData,
+        location: {
+          latitude: newLocation.latitude,
+          longitude: newLocation.longitude,
+          fullAddress: newLocation.fullAddress,
+          province: newLocation.province,
+        },
+      }));
+    }
+  }
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      const decoded = jwt_decode<DecodedToken>(token!);
+
+      // Prepare the request payload
+      const requestData = {
+        USER_ID: decoded.id, // You need to implement getUserIdFromToken function
+        DIS_TITLE: formData.disasterTitle,
+        DIS_DESCRIPTION: formData.description,
+        DIS_DONATION: formData.donationLink,
+        DIS_ADDRESS: formData.location ? formData.location.fullAddress : null,
+        DIS_LATITUDE: formData.location ? formData.location.latitude : null,
+        DIS_LONGITUDE: formData.location ? formData.location.longitude : null,
+        DIS_PROVINCE: formData.location ? formData.location.province : null,
+        DIS_IMAGE: formData.uploadedImageUrl,
+      };
+  
+      // Make the Axios POST request
+      const response = await axios.post('YOUR_BACKEND_API_URL', requestData);
+  
+      // Handle the response, show success message, etc.
+      console.log('Server Response:', response.data);
+      showNotification('success', 'Laporan berhasil disampaikan!', 'Terima kasih atas laporannya');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      showNotification('error', 'Gagal mengirim laporan!', 'Terjadi kesalahan saat mengirim data');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSubmit = () => {
-    console.log('Form Data:', {
-      disasterTitle,
-      description,
-      donationLink,
-      location,
-      uploadedImageUrl,
-    });
-    // You can add logic here to send the data to your backend or perform further actions
-  };
+  if (loading) {
+    // If loading is true, render the Loading component
+    return <Loading />;
+  } 
 
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -95,15 +147,15 @@ const DisasterInput = () => {
 
         {/* Disaster */}
         <Typography variant="h6">Judul Bencana</Typography>
-        <TextField label="Bencana" fullWidth onChange={(e) => setDisasterTitle(e.target.value)} />
+        <TextField label="Bencana" fullWidth onChange={(e) => setFormData((prevData) => ({ ...prevData, disasterTitle: e.target.value }))} />
 
         {/* Description */}
         <Typography variant="h6">Deskripsi Bencana</Typography>
-        <TextField label="Deskripsi" fullWidth onChange={(e) => setDescription(e.target.value)} />
+        <TextField label="Deskripsi" fullWidth onChange={(e) => setFormData((prevData) => ({ ...prevData, description: e.target.value }))} />
 
         {/* Donation */}
         <Typography variant="h6">Link Donasi (Ayobantu.com / Kitabisa.com)</Typography>
-        <TextField label="Link Donasi (Jika Ada)" fullWidth onChange={(e) => setDonationLink(e.target.value)} />
+        <TextField label="Link Donasi (Jika Ada)" fullWidth onChange={(e) => setFormData((prevData) => ({ ...prevData, donationLink: e.target.value }))} />
 
         {/* Location Detection */}
         <Typography variant="h6">Deteksi Lokasi (izinkan lokasi)</Typography>
@@ -119,4 +171,3 @@ const DisasterInput = () => {
 };
 
 export default DisasterInput;
-

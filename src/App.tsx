@@ -22,7 +22,11 @@ function App() {
         },
         {
           path: '/homepage',
-          element: <AuthLogoutPage />,
+          element: <HomePage />,
+        },
+        {
+          path: '/home',
+          element: <HomePage />,
         },
         {
           path: '/login',

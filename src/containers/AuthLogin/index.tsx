@@ -14,6 +14,7 @@ import { useRef, useState } from 'react';
 import { baseUrl } from '../../configs/Constants'
 import { useNotification } from '../../contexts/NotificationContext';
 import { useSettings } from '../../contexts/SettingProvider';
+import { Loading } from '../../components'; // Import the Loading component
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +26,8 @@ const defaultTheme = createTheme();
 export default function AuthLogin() {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [loading, setLoading] = useState(false); // Initial loading state
+
     const formRef = useRef<HTMLFormElement | null>(null);
     const showNotification = useNotification();
     const { updateSettings } = useSettings();
@@ -56,11 +59,8 @@ export default function AuthLogin() {
 
         // Check if there are any errors before submitting the form
         if (!emailError) {
+            setLoading(true);
             const formData = new FormData(formRef.current as HTMLFormElement);
-            console.log({
-                email: formData.get('email'),
-                password: formData.get('password'),
-            });
             // Add your form submission logic here
             try {
                 const response = await axios.post(`${baseUrl}/auth/login`, {
@@ -84,9 +84,17 @@ export default function AuthLogin() {
                 console.error('Error submitting form:', error);
                 showNotification('error','Login Gagal!', 'Login Gagal');
                 // Handle error as needed
+            }finally {
+                // Set loading to false once data is loaded or if an error occurs
+                setLoading(false);
             }
         }
     };
+
+    if (loading) {
+        // If loading is true, render the Loading component
+        return <Loading />;
+    }
 
     return (
         <ThemeProvider theme={defaultTheme}>

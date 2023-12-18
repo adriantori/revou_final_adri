@@ -37,7 +37,6 @@ function DoctorList() {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${baseUrl}/doctor/getAll`); // Update the endpoint accordingly
-        console.log(response)
         setDoctors(response.data.doctors);
       } catch (error) {
         console.error('Error fetching data:', error);

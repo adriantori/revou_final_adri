@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { useRef, useState } from "react";
+import { Loading } from "../"
 
 interface ImageUploadComponentProps {
   onImageUrlChange: (imageUrl: string | null) => void;
@@ -7,9 +8,12 @@ interface ImageUploadComponentProps {
 
 const ImageUploadComponent: React.FC<ImageUploadComponentProps> = ({ onImageUrlChange }) => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false); // Initial loading state
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleImageUpload = async (image: string | Blob | null) => {
+
     if (!image) {
       console.error('No image selected for upload');
       return;
@@ -17,6 +21,7 @@ const ImageUploadComponent: React.FC<ImageUploadComponentProps> = ({ onImageUrlC
 
     const formData = new FormData();
     formData.append('image', image);
+    setLoading(true);
 
     try {
       const response = await fetch('https://api.imgbb.com/1/upload?key=ca9a8952b2316d8ae0114df21f591cf2', {
@@ -34,8 +39,15 @@ const ImageUploadComponent: React.FC<ImageUploadComponentProps> = ({ onImageUrlC
       }
     } catch (error) {
       console.error('Error uploading image:', error);
+    } finally {
+      // Set loading to false once data is loaded or if an error occurs
+      setLoading(false);
     }
   };
+  if (loading) {
+    // If loading is true, render the Loading component
+    return <Loading />;
+  }
 
   return (
     <div>
