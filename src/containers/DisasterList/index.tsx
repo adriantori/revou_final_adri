@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -5,6 +7,8 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
+
+import { baseUrlDis } from '../../configs/Constants';
 
 interface Disaster {
     BEN_ID: string;
@@ -16,30 +20,22 @@ interface Disaster {
     BEN_DONATION: string;
 }
 
-// Example array of disasters
-const disasters: Disaster[] = [
-    {
-        BEN_ID: '1',
-        BEN_DISASTER: 'Disaster 1',
-        BEN_LOCATION: 'Location 1',
-        BEN_TIME: '2023-01-01T12:00:00', // Replace with the actual date and time
-        BEN_DESCRIPTION: 'Description 1',
-        BEN_IMAGE: 'https://i.ibb.co/4Z24wRQ/KAITO-01-st-ayaka-one.png',
-        BEN_DONATION: 'Donation Information 1',
-    },
-    {
-        BEN_ID: '2',
-        BEN_DISASTER: 'Disaster 2',
-        BEN_LOCATION: 'Location 2',
-        BEN_TIME: '2023-02-01T14:30:00', // Replace with the actual date and time
-        BEN_DESCRIPTION: 'Description 2',
-        BEN_IMAGE: 'https://i.ibb.co/RhkMYH4/Diagram-fitur-v2-1-2-drawio.png',
-        BEN_DONATION: 'Donation Information 2',
-    },
-    // Add more disasters as needed
-];
-
 function DisasterList() {
+    const [disasters, setDisasters] = useState<Disaster[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${baseUrlDis}/`); // Update the endpoint accordingly
+                setDisasters(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []); // Empty dependency array ensures the effect runs only once on mount
+
     const formatDateTime = (dateTimeString: string) => {
         const options: Intl.DateTimeFormatOptions = {
             year: 'numeric',
@@ -103,7 +99,7 @@ function DisasterList() {
                     </Paper>
                 </Grid>
             ))}
-        </Grid >
+        </Grid>
     );
 }
 

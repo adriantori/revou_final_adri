@@ -3,7 +3,7 @@ import { PublicLayout } from './layouts';
 import { NotificationContext, AppProvider } from './contexts';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import {HomePage, AuthLogoutPage, AuthLoginPage, AuthRegisterPage, BaseDisasterPage, TestMapPage, BaseFirefighterPage,
+import {HomePage, AuthLogoutPage, AuthLoginPage, AuthRegisterPage, BaseDisasterPage, BaseFirefighterPage,
 BaseMedicalPage, BasePolicePage, DoctorListPage, DisasterListPage, DisasterInputPage} from './pages';
 import { SettingsProvider } from './contexts/SettingProvider';
 
@@ -59,10 +59,6 @@ function App() {
         {
           path: '/laporan',
           element: <DisasterInputPage />,
-        },
-        {
-          path: '/testmap',
-          element: <TestMapPage />,
         },
       ],
     },
