@@ -32,6 +32,7 @@ const Home: React.FC = () => {
       />
     ),
     beforeChange: (oldIndex: number, newIndex: number) => {
+      console.log(oldIndex);
       setCurrentSlide(newIndex);
     },
   };
