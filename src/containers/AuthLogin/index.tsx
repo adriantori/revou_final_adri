@@ -73,7 +73,7 @@ export default function AuthLogin() {
                 if (token) {
                     // Store the token in localStorage
                     localStorage.setItem('token', token);
-                    const newSettings = ['Home', 'Profile', 'Logout'];
+                    const newSettings = ['Homepage', 'Profile', 'Logout'];
                     updateSettings(newSettings);
                 }
                 // Add your additional logic here

@@ -10,6 +10,7 @@ import jwt_decode from 'jwt-decode';
 import { ImageUploadComponent, MapComponent, Loading } from '../../components';
 import { useNotification } from '../../contexts/NotificationContext';
 import axios from 'axios';
+import { baseUrlDis } from '../../configs/Constants';
 
 interface Location {
   latitude: number;
@@ -117,10 +118,15 @@ const DisasterInput = () => {
         DIS_LONGITUDE: formData.location ? formData.location.longitude : null,
         DIS_PROVINCE: formData.location ? formData.location.province : null,
         DIS_IMAGE: formData.uploadedImageUrl,
+        DIS_TIME: Date.now()
       };
   
       // Make the Axios POST request
-      const response = await axios.post('YOUR_BACKEND_API_URL', requestData);
+      const response = await axios.post(`${baseUrlDis}/`, requestData,{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
   
       // Handle the response, show success message, etc.
       console.log('Server Response:', response.data);

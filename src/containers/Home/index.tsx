@@ -1,5 +1,5 @@
 import React, { createRef, useState, useEffect } from 'react';
-import { Grid, Paper, Typography, useMediaQuery, Box, IconButton, Card, CardContent, Button } from '@mui/material';
+import { Grid, Paper, Typography, useMediaQuery, Box, IconButton, Card, CardContent, Button, Link } from '@mui/material';
 import { CustomDivider } from '../../components';
 import Slider from 'react-slick';
 import { NavigateBefore, NavigateNext } from '@mui/icons-material';
@@ -77,7 +77,7 @@ const Home: React.FC = () => {
             pointerEvents: 'auto', // Allow click events
           }}
         >
-          <NavigateBefore style={{ fontSize: isSmallScreen ? 32 : 64 }}/>
+          <NavigateBefore style={{ fontSize: isSmallScreen ? 32 : 64 }} />
         </IconButton>
 
         <IconButton
@@ -96,15 +96,34 @@ const Home: React.FC = () => {
             pointerEvents: 'auto', // Allow click events
           }}
         >
-          <NavigateNext style={{ fontSize: isSmallScreen ? 32 : 64 }}/>
+          <NavigateNext style={{ fontSize: isSmallScreen ? 32 : 64 }} />
         </IconButton>
-        
+
       </Box>
 
 
 
       {/* Full-width box with Lorem Ipsum text */}
       <Box sx={{ p: 2, mt: 2, textAlign: 'center' }}>
+      {isSmallScreen ? (          
+      <Link href="/laporkan">
+            <Button
+              sx={{
+                backgroundColor: '#FF0000', // Red color
+                color: '#FFFFFF', // White text color
+                '&:hover': {
+                  backgroundColor: '#CC0000', // Darker red color on hover
+                },
+                marginBottom: 5,
+                marginTop: 5,
+                width: 200
+              }}
+            >
+              Laporkan!
+            </Button>
+          </Link>
+        ) : null}
+
         <Typography variant={isSmallScreen ? 'h3' : 'h1'}>
           Apa Itu Bencanamu?
         </Typography>

@@ -10,12 +10,11 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { useSettings } from '../../contexts/SettingProvider';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 
-const commonPages = ['Bencana', 'DAMKAR', 'Polisi', 'Poliklinik', 'testmap'];
+const commonPages = ['Bencana', 'DAMKAR', 'Polisi', 'Poliklinik'];
 const mobilePages = ['Dokter', 'Laporkan']; // Additional pages for mobile view
 
 
@@ -62,7 +61,6 @@ function Navbar() {
     <AppBar position="static" sx={{ background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <MonitorHeartIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -73,12 +71,12 @@ function Navbar() {
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'black', // Change text color to black
+              letterSpacing: '.1rem',
+              color: 'red', // Change text color to black
               textDecoration: 'none',
             }}
           >
-            MedX
+            DaruraT!
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -124,7 +122,6 @@ function Navbar() {
               ))}
             </Menu>
           </Box>
-          <MonitorHeartIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -140,7 +137,7 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            DaruraT!
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
