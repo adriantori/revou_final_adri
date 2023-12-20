@@ -14,6 +14,8 @@ import { useState } from 'react';
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 
+import { Loading } from '../../components'
+
 import { baseUrl } from '../../configs/Constants'
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../../contexts/NotificationContext';
@@ -31,12 +33,15 @@ export default function SignUp() {
     const [inf_nik, setNIK] = useState('');
     const [inf_telp, setTelepon] = useState('');
     const [name, setName] = useState('');
-    const [bio, setBio] = useState('');
-    const [nostr, setNostr] = useState('');
-    const [lokasi, setLokasi] = useState('');
-    const [spec, setSpec] = useState('');
-    const [emailContact, setEmailContact] = useState('');
-    const [experience, setExperience] = useState('');
+    const [dok_bio, setBio] = useState('');
+    const [dok_nostr, setNostr] = useState('');
+    const [dok_location, setLokasi] = useState('');
+    const [dok_spec, setSpec] = useState('');
+    const [dok_telp, setTelpContact] = useState('');
+    const [dok_email, setEmailContact] = useState('');
+    const [dok_exp, setExperience] = useState('');
+    const [loading, setLoading] = useState(false); // Initial loading state
+
     const showNotification = useNotification();
     const navigate = useNavigate();
 
@@ -72,6 +77,16 @@ export default function SignUp() {
         const phoneRegex = /^[0-9\b]+$/;
         if (phoneRegex.test(newTelepon) || newTelepon === '') {
             setTelepon(newTelepon);
+        }
+    };
+
+    const handleTeleponChangeDoc = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newTelepon: string = event.target.value;
+
+        // Validate phone number (add your own criteria)
+        const phoneRegex = /^[0-9\b]+$/;
+        if (phoneRegex.test(newTelepon) || newTelepon === '') {
+            setTelpContact(newTelepon);
         }
     };
 
@@ -164,7 +179,7 @@ export default function SignUp() {
                             label="Spesialisasi"
                             name="spec"
                             autoComplete="spec"
-                            value={spec}
+                            value={dok_spec}
                             onChange={(e) => setSpec(e.target.value)}
                         />
                     </Grid>
@@ -176,7 +191,7 @@ export default function SignUp() {
                             label="Email Untuk Dihubungi"
                             name="emailContact"
                             autoComplete="emailContact"
-                            value={emailContact}
+                            value={dok_email}
                             onChange={(e) => setEmailContact(e.target.value)}
                             onBlur={validateEmail}
                             error={!!emailError}
@@ -192,8 +207,8 @@ export default function SignUp() {
                             type="tel"
                             id="inf_telp"
                             autoComplete="tel"
-                            value={inf_telp}
-                            onChange={handleTeleponChange}
+                            value={dok_telp}
+                            onChange={handleTeleponChangeDoc}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -205,7 +220,7 @@ export default function SignUp() {
                             type="text"
                             id="bio"
                             autoComplete="bio"
-                            value={bio}
+                            value={dok_bio}
                             onChange={handleBioChange}
                         />
                     </Grid>
@@ -219,7 +234,7 @@ export default function SignUp() {
                             type="text"
                             id="nostr"
                             autoComplete="nostr"
-                            value={nostr}
+                            value={dok_nostr}
                             onChange={handleNostrChange}
                         />
                     </Grid>
@@ -233,7 +248,7 @@ export default function SignUp() {
                             type="text"
                             id="lokasi"
                             autoComplete="lokasi"
-                            value={lokasi}
+                            value={dok_location}
                             onChange={handleLokasiChange}
                         />
                     </Grid>
@@ -247,7 +262,7 @@ export default function SignUp() {
                             type="number"
                             id="experience"
                             autoComplete="experience"
-                            value={experience}
+                            value={dok_exp}
                             onChange={handleExperienceChange}
                         />
                     </Grid>
@@ -324,22 +339,29 @@ export default function SignUp() {
             } else if (role_id === '2') {
                 // Role 2 API call and data
                 try {
+                    setLoading(true);
                     const url = `${baseUrl}/doctor/register`; // Replace with your actual API endpoint for role_id 2
-                    const data = {
-                        user_email,
-                        user_pass,
-                        role_id,
-                        name,
-                        spec,
-                        emailContact,
-                        inf_telp,
-                        bio,
-                        nostr,
-                        lokasi,
-                        experience,
-                    };
+                    const dok_name = name;
+                    const data = [
+                        {
+                            user_email,
+                            user_pass,
+                            role_id,
+                        },
+                        {
+                            dok_name,
+                            dok_spec,
+                            dok_email,
+                            dok_telp,
+                            dok_bio,
+                            dok_nostr,
+                            dok_location,
+                            dok_exp,
+                        }
+                    ];
 
                     await axios.post(url, data);
+                    setLoading(false);
                     showNotification('success', 'Register Sukses! Login langsung yuk', 'Login Sukses');
                     navigate('/login')
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -356,6 +378,10 @@ export default function SignUp() {
         }
     };
 
+    if (loading) {
+        // If loading is true, render the Loading component
+        return <Loading />;
+    }
 
     return (
         <ThemeProvider theme={defaultTheme}>

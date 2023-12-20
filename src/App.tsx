@@ -4,7 +4,7 @@ import { NotificationContext, AppProvider } from './contexts';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import {HomePage, AuthLogoutPage, AuthLoginPage, AuthRegisterPage, BaseDisasterPage, BaseFirefighterPage,
-BaseMedicalPage, BasePolicePage, DoctorListPage, DisasterListPage, DisasterInputPage} from './pages';
+BaseMedicalPage, BasePolicePage, DoctorListPage, DisasterListPage, DisasterInputPage, ProfilePage} from './pages';
 import { SettingsProvider } from './contexts/SettingProvider';
 
 function App() {
@@ -59,6 +59,10 @@ function App() {
         {
           path: '/laporan',
           element: <DisasterInputPage />,
+        },
+        {
+          path: '/profile',
+          element: <ProfilePage />,
         },
       ],
     },

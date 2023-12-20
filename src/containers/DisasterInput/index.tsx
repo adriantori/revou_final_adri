@@ -28,7 +28,6 @@ interface FormData {
   uploadedImageUrl: string | null;
 }
 
-
 interface DecodedToken {
   email: string;
   id: number;
