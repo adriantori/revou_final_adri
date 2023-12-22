@@ -48,17 +48,48 @@ const Home: React.FC = () => {
 
   return (
     <Paper elevation={0} sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+      <Box sx={{ p: 2, mb:2, textAlign: 'center' }}>
+        {isSmallScreen ? (
+          <Link href="/laporkan">
+            <Button
+              sx={{
+                backgroundColor: '#FF0000', // Red color
+                color: '#FFFFFF', // White text color
+                '&:hover': {
+                  backgroundColor: '#CC0000', // Darker red color on hover
+                },
+                marginBottom: 5,
+                marginTop: 0,
+                width: 200
+              }}
+            >
+              Laporkan!
+            </Button>
+          </Link>
+        ) : null}
+
+        <Typography variant={isSmallScreen ? 'h3' : 'h1'}>
+          Apa Itu Darurat.my.id?
+        </Typography>
+        <Typography variant="body1">
+          Aplikasi ini dirancang sebagai solusi terpadu untuk menghadapi situasi darurat dengan memberikan akses cepat dan mudah kepada pengguna. Fitur pelaporan bencana memungkinkan masyarakat untuk dengan cepat dan efisien memberikan informasi tentang kejadian darurat, memungkinkan otoritas setempat untuk merespons dengan lebih cepat. Hotline relawan dokter umum membantu mendekatkan layanan kesehatan ke masyarakat, memfasilitasi konsultasi medis di masa-masa darurat. Selain itu, aplikasi menyediakan informasi dasar tentang keamanan, seperti pelaporan kebakaran, kepolisian, rumah sakit, dan pemadam kebakaran, sehingga pengguna dapat dengan mudah mengakses bantuan dan informasi yang diperlukan dalam situasi darurat. Dengan berbagai fitur ini, aplikasi ini bertujuan untuk meningkatkan kesiapsiagaan masyarakat dan memastikan penanganan darurat yang lebih efektif dan efisien.
+        </Typography>
+      </Box>
+
       {/* Image Carousel */}
       <Box sx={{ position: 'relative' }}>
         <Slider {...sliderSettings} ref={sliderRef}>
           <div>
-            <img src="https://placehold.co/600x400/EEE/31343C" alt="Image 1" style={{ width: '100%', height: 'auto' }} />
+            <img src="PolisiCard.png" alt="Image 1" style={{ width: '100%', height: 'auto' }} />
           </div>
           <div>
-            <img src="https://placehold.co/600x400/EEE/31343C" alt="Image 2" style={{ width: '100%', height: 'auto' }} />
+            <img src="DamkarCard.png" alt="Image 2" style={{ width: '100%', height: 'auto' }} />
           </div>
           <div>
-            <img src="https://placehold.co/600x400/EEE/31343C" alt="Image 3" style={{ width: '100%', height: 'auto' }} />
+            <img src="MedisCard.png" alt="Image 3" style={{ width: '100%', height: 'auto' }} />
+          </div>
+          <div>
+            <img src="BencanaCard.png" alt="Image 3" style={{ width: '100%', height: 'auto' }} />
           </div>
           {/* Add more slides as needed */}
         </Slider>
@@ -105,33 +136,7 @@ const Home: React.FC = () => {
 
 
       {/* Full-width box with Lorem Ipsum text */}
-      <Box sx={{ p: 2, mt: 2, textAlign: 'center' }}>
-      {isSmallScreen ? (          
-      <Link href="/laporkan">
-            <Button
-              sx={{
-                backgroundColor: '#FF0000', // Red color
-                color: '#FFFFFF', // White text color
-                '&:hover': {
-                  backgroundColor: '#CC0000', // Darker red color on hover
-                },
-                marginBottom: 5,
-                marginTop: 5,
-                width: 200
-              }}
-            >
-              Laporkan!
-            </Button>
-          </Link>
-        ) : null}
 
-        <Typography variant={isSmallScreen ? 'h3' : 'h1'}>
-          Apa Itu Bencanamu?
-        </Typography>
-        <Typography variant="body1">
-          Aplikasi ini dirancang sebagai solusi terpadu untuk menghadapi situasi darurat dengan memberikan akses cepat dan mudah kepada pengguna. Fitur pelaporan bencana memungkinkan masyarakat untuk dengan cepat dan efisien memberikan informasi tentang kejadian darurat, memungkinkan otoritas setempat untuk merespons dengan lebih cepat. Hotline relawan dokter umum membantu mendekatkan layanan kesehatan ke masyarakat, memfasilitasi konsultasi medis di masa-masa darurat. Selain itu, aplikasi menyediakan informasi dasar tentang keamanan, seperti pelaporan kebakaran, kepolisian, rumah sakit, dan pemadam kebakaran, sehingga pengguna dapat dengan mudah mengakses bantuan dan informasi yang diperlukan dalam situasi darurat. Dengan berbagai fitur ini, aplikasi ini bertujuan untuk meningkatkan kesiapsiagaan masyarakat dan memastikan penanganan darurat yang lebih efektif dan efisien.
-        </Typography>
-      </Box>
 
       <CustomDivider />
 
@@ -149,27 +154,29 @@ const Home: React.FC = () => {
               />
               <CardContent>
                 {/* Add content for the card */}
-                <Typography variant="body1">Card Content</Typography>
+                <Typography variant="body1">Bencana Alam</Typography>
               </CardContent>
             </Card>
           </Grid>
         )}
 
         <Grid item xs={12} md={5} sx={{ display: 'flex', flexDirection: 'column', marginLeft: 'auto' }}>
-          <Typography variant="h3" sx={{ color: 'red' }}>Apa Itu DAMKAR?</Typography>
+          <Typography variant="h3" sx={{ color: 'purple' }}>Apa Itu Bencana?</Typography>
           <Typography variant={isSmallScreen ? 'body1' : 'h5'}>
-            DAMKAR, atau Pemadam Kebakaran, adalah lembaga kritis dalam menjaga keselamatan masyarakat dari ancaman kebakaran dan bencana terkait. Dengan fokus pada respons cepat dan pencegahan, DAMKAR memiliki peran utama dalam melindungi nyawa dan harta benda.
+            Selamat datang di halaman kami yang membahas bencana. Mari tingkatkan kesadaran dan kesiapsiagaan menghadapi dampak tak terduga.
           </Typography>
           <Box sx={{ marginTop: 'auto' }}>
-            <Button
-              fullWidth
-              variant="contained"
-              style={{ backgroundColor: 'red', color: 'white' }}
-            >
-              <Typography>
-                Ke halaman DAMKAR {'>'}
-              </Typography>
-            </Button>
+            <Link href="/bencana">
+              <Button
+                fullWidth
+                variant="contained"
+                style={{ backgroundColor: 'red', color: 'white' }}
+              >
+                <Typography>
+                  Ke halaman Bencana {'>'}
+                </Typography>
+              </Button>
+            </Link>
           </Box>
         </Grid>
       </Grid>
@@ -184,15 +191,17 @@ const Home: React.FC = () => {
             DAMKAR, atau Pemadam Kebakaran, adalah lembaga kritis dalam menjaga keselamatan masyarakat dari ancaman kebakaran dan bencana terkait. Dengan fokus pada respons cepat dan pencegahan, DAMKAR memiliki peran utama dalam melindungi nyawa dan harta benda.
           </Typography>
           <Box sx={{ marginTop: 'auto' }}>
-            <Button
-              fullWidth
-              variant="contained"
-              style={{ backgroundColor: 'red', color: 'white' }}
-            >
-              <Typography>
-                Ke halaman DAMKAR {'>'}
-              </Typography>
-            </Button>
+            <Link href="/damkar">
+              <Button
+                fullWidth
+                variant="contained"
+                style={{ backgroundColor: 'red', color: 'white' }}
+              >
+                <Typography>
+                  Ke halaman DAMKAR {'>'}
+                </Typography>
+              </Button>
+            </Link>
           </Box>
         </Grid>
         {/* Right side (Image) */}
@@ -201,13 +210,13 @@ const Home: React.FC = () => {
             <Card>
               {/* Change Card Title into Image */}
               <img
-                src="BencanaCard.png"  // Replace with your image URL
+                src="DamkarCard.png"  // Replace with your image URL
                 alt="card-image"
                 style={{ width: '100%', height: 'auto' }}
               />
               <CardContent>
                 {/* Add content for the card */}
-                <Typography variant="body1">Card Content</Typography>
+                <Typography variant="body1">Pemadaman Api</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -224,32 +233,33 @@ const Home: React.FC = () => {
             <Card>
               {/* Change Card Title into Image */}
               <img
-                src="BencanaCard.png"  // Replace with your image URL
+                src="PolisiCard.png"  // Replace with your image URL
                 alt="card-image"
                 style={{ width: '100%', height: 'auto' }}
               />
               <CardContent>
                 {/* Add content for the card */}
-                <Typography variant="body1">Card Content</Typography>
+                <Typography variant="body1">Polisi Membantu Kecelakaan</Typography>
               </CardContent>
             </Card>
           </Grid>
         )}
         <Grid item xs={12} md={5} sx={{ display: 'flex', flexDirection: 'column', marginLeft: 'auto' }}>
-          <Typography variant="h3" sx={{ color: 'red' }}>Apa Itu DAMKAR?</Typography>
+          <Typography variant="h3" sx={{ color: 'blue' }}>Apa Itu Kepolisian?</Typography>
           <Typography variant={isSmallScreen ? 'body1' : 'h5'}>
-            DAMKAR, atau Pemadam Kebakaran, adalah lembaga kritis dalam menjaga keselamatan masyarakat dari ancaman kebakaran dan bencana terkait. Dengan fokus pada respons cepat dan pencegahan, DAMKAR memiliki peran utama dalam melindungi nyawa dan harta benda.
-          </Typography>
+            Peran kepolisian menjaga keamanan dan berdampak pada kesehatan dengan menciptakan lingkungan aman dan mendukung kesejahteraan mental.          </Typography>
           <Box sx={{ marginTop: 'auto' }}>
-            <Button
-              fullWidth
-              variant="contained"
-              style={{ backgroundColor: 'red', color: 'white' }}
-            >
-              <Typography>
-                Ke halaman DAMKAR {'>'}
-              </Typography>
-            </Button>
+            <Link href="/polisi">
+              <Button
+                fullWidth
+                variant="contained"
+                style={{ backgroundColor: 'blue', color: 'white' }}
+              >
+                <Typography>
+                  Ke halaman Polisi {'>'}
+                </Typography>
+              </Button>
+            </Link>
           </Box>
         </Grid>
       </Grid>
@@ -259,20 +269,21 @@ const Home: React.FC = () => {
       {/* Left side (Title and Text) */}
       <Grid container>
         <Grid item xs={12} md={5} sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant="h3" sx={{ color: 'red' }}>Apa Itu DAMKAR?</Typography>
+          <Typography variant="h3" sx={{ color: 'green' }}>Apa Itu Medis?</Typography>
           <Typography variant={isSmallScreen ? 'body1' : 'h5'}>
-            DAMKAR, atau Pemadam Kebakaran, adalah lembaga kritis dalam menjaga keselamatan masyarakat dari ancaman kebakaran dan bencana terkait. Dengan fokus pada respons cepat dan pencegahan, DAMKAR memiliki peran utama dalam melindungi nyawa dan harta benda.
-          </Typography>
+            Medis: pengobatan dan pertolongan pertama darurat menyelamatkan nyawa sebelum bantuan medis lebih lanjut. Keterampilan sederhana penting dalam respons cepat.          </Typography>
           <Box sx={{ marginTop: 'auto' }}>
-            <Button
-              fullWidth
-              variant="contained"
-              style={{ backgroundColor: 'red', color: 'white' }}
-            >
-              <Typography>
-                Ke halaman DAMKAR {'>'}
-              </Typography>
-            </Button>
+            <Link href="/medis">
+              <Button
+                fullWidth
+                variant="contained"
+                style={{ backgroundColor: 'green', color: 'white' }}
+              >
+                <Typography>
+                  Ke halaman Medis {'>'}
+                </Typography>
+              </Button>
+            </Link>
           </Box>
         </Grid>
         {/* Right side (Image) */}
@@ -281,13 +292,13 @@ const Home: React.FC = () => {
             <Card>
               {/* Change Card Title into Image */}
               <img
-                src="BencanaCard.png"  // Replace with your image URL
+                src="MedisCard.png"  // Replace with your image URL
                 alt="card-image"
                 style={{ width: '100%', height: 'auto' }}
               />
               <CardContent>
                 {/* Add content for the card */}
-                <Typography variant="body1">Card Content</Typography>
+                <Typography variant="body1">Bantuan Pertama</Typography>
               </CardContent>
             </Card>
           </Grid>
