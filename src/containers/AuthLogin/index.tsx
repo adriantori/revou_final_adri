@@ -152,7 +152,7 @@ export default function AuthLogin() {
                         <Grid container>
                             <Grid item>
                                 <Link href="/register" variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                    {"Belum ada akun? Daftar Yuk"}
                                 </Link>
                             </Grid>
                         </Grid>

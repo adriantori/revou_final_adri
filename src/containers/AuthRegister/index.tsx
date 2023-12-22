@@ -328,6 +328,7 @@ export default function SignUp() {
                         inf_nik,
                         inf_telp,
                     }];
+                    console.log(data)
                     await axios.post(url, data);
                     showNotification('success', 'Register Sukses! Login langsung yuk', 'Login Sukses');
                     navigate('/login')
@@ -367,7 +368,7 @@ export default function SignUp() {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } catch (error: unknown) {
                     const err = error as AxiosError
-                    showNotification('error', err.message, 'Login Sukses');
+                    showNotification('error', err.message, 'Error parah');
                 }
 
             }

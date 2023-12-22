@@ -14,7 +14,7 @@ import { useSettings } from '../../contexts/SettingProvider';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 
-const commonPages = ['Bencana', 'DAMKAR', 'Polisi', 'Poliklinik'];
+const commonPages = ['Bencana', 'DAMKAR', 'Polisi', 'Medis'];
 const mobilePages = ['Dokter', 'Laporkan']; // Additional pages for mobile view
 
 
