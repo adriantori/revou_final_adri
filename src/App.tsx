@@ -41,7 +41,7 @@ function App() {
           element: <BaseFirefighterPage />,
         },
         {
-          path: '/poliklinik',
+          path: '/medis',
           element: <BaseMedicalPage />,
         },
         {

@@ -17,9 +17,9 @@ const BaseMedical = () => {
       <Grid container>
         {/* Left side (Title and Text) */}
         <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 2 }}>
-          <Typography variant="h3" sx={{ color: 'purple' }}>What Is Poliklinik?</Typography>
+          <Typography variant="h3" sx={{ color: 'purple' }}>Apa It Medis?</Typography>
           <Typography variant={isSmallScreen ? 'body1' : 'h5'}>
-            The disaster hotline is a special phone service used during emergencies like floods, storms, or other large-scale disasters. It's a number you can call to get help, information, or report dangerous situations during these tough times. Trained experts are ready on the other end of the line to listen to your concerns and guide you on what to do to stay safe. Whether it's for getting help or sharing important details about the disaster, the hotline is there to assist people affected by these tough situations.
+          Medis melibatkan ilmu pengobatan dan perawatan kesehatan, sementara pertolongan pertama adalah serangkaian tindakan darurat untuk menyelamatkan nyawa atau mencegah kondisi memburuk sebelum bantuan medis lebih lanjut. Pertolongan pertama melibatkan keterampilan sederhana seperti pemulihan nafas dan penanganan luka. Kemampuan memberikan pertolongan pertama penting dalam respons cepat terhadap keadaan darurat, memberikan bantuan kritis sebelum bantuan medis profesional tersedia.
           </Typography>
         </Grid>
 
