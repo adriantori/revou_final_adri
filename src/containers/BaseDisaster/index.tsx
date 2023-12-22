@@ -1,6 +1,6 @@
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import { Grid, useMediaQuery, Box, Button, Card, CardContent, List, ListItem, ListItemText, Chip } from '@mui/material';
+import { Grid, useMediaQuery, Box, Button, Card, CardContent, List, ListItem, ListItemText, Chip, Link } from '@mui/material';
 
 
 const BaseDisaster = () => {
@@ -19,7 +19,7 @@ const BaseDisaster = () => {
         <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 2 }}>
           <Typography variant="h3" sx={{ color: 'purple' }}>Apa Itu Bencana?</Typography>
           <Typography variant={isSmallScreen ? 'body1' : 'h5'}>
-          Selamat datang di halaman kami yang membahas tentang bencana, suatu fenomena yang tak terduga dan dapat menyebabkan dampak signifikan pada kehidupan. Bencana dapat muncul dalam berbagai bentuk, seperti gempa bumi, banjir, atau kebakaran hutan yang sering kali dipicu oleh tindakan manusia. Penting untuk memahami kompleksitas bencana ini guna mengembangkan kesadaran dan kesiapsiagaan masyarakat dalam menghadapi tantangan yang tak terduga ini.          </Typography>
+            Selamat datang di halaman kami yang membahas tentang bencana, suatu fenomena yang tak terduga dan dapat menyebabkan dampak signifikan pada kehidupan. Bencana dapat muncul dalam berbagai bentuk, seperti gempa bumi, banjir, atau kebakaran hutan yang sering kali dipicu oleh tindakan manusia. Penting untuk memahami kompleksitas bencana ini guna mengembangkan kesadaran dan kesiapsiagaan masyarakat dalam menghadapi tantangan yang tak terduga ini.          </Typography>
         </Grid>
 
         {/* Right side (Image) */}
@@ -53,15 +53,19 @@ const BaseDisaster = () => {
           <Typography variant="body2" style={{ color: "#6D107D" }}>Lakukanlah pelaporan bila terjadi kebakaran sesuai dengan prosedurnya, dan petugas akan datang secepatnya.</Typography>
         </Box>
         {!isSmallScreen && (
+          <Link href="/laporkan">
           <Button variant="contained" style={{ backgroundColor: "#9C27B0" }}>
             Laporkan
           </Button>
+          </Link>
         )}
         {/* Render the button underneath texts for mobile */}
         {isSmallScreen && (
-          <Button variant="contained" style={{ backgroundColor: "#9C27B0" }}>
-            Laporkan 
-          </Button>
+          <Link href="/laporkan">
+            <Button variant="contained" style={{ backgroundColor: "#9C27B0" }}>
+              Laporkan
+            </Button>
+          </Link>
         )}
       </Box>
 
@@ -99,12 +103,12 @@ const BaseDisaster = () => {
             </ListItem>
             <ListItem>
               <ListItemText>
-                <Chip label="Koordinasikan dengan otoritas setempat."  style={chipStyle} />
+                <Chip label="Koordinasikan dengan otoritas setempat." style={chipStyle} />
               </ListItemText>
             </ListItem>
             <ListItem>
               <ListItemText>
-                <Chip label="Pastikan informasi yang akurat dan lengkap."  style={chipStyle} />
+                <Chip label="Pastikan informasi yang akurat dan lengkap." style={chipStyle} />
               </ListItemText>
             </ListItem>
             {/* Add more ListItem components for additional chips */}

@@ -1,6 +1,6 @@
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import { Grid, useMediaQuery, Box, Button, Card, CardContent, List, ListItem, ListItemText, Chip } from '@mui/material';
+import { Grid, useMediaQuery, Box, Button, Card, CardContent, List, ListItem, ListItemText, Chip, Link } from '@mui/material';
 
 
 const BaseMedical = () => {
@@ -8,8 +8,8 @@ const BaseMedical = () => {
 
   const chipStyle = {
     backgroundColor: 'white',
-    color: '#9C27B0',
-    border: '1px solid #9C27B0',
+    color: '#2E7D32',
+    border: '1px solid #2E7D32',
   };
 
   return (
@@ -17,9 +17,9 @@ const BaseMedical = () => {
       <Grid container>
         {/* Left side (Title and Text) */}
         <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 2 }}>
-          <Typography variant="h3" sx={{ color: 'purple' }}>Apa It Medis?</Typography>
+          <Typography variant="h3" sx={{ color: 'green' }}>Apa It Medis?</Typography>
           <Typography variant={isSmallScreen ? 'body1' : 'h5'}>
-          Medis melibatkan ilmu pengobatan dan perawatan kesehatan, sementara pertolongan pertama adalah serangkaian tindakan darurat untuk menyelamatkan nyawa atau mencegah kondisi memburuk sebelum bantuan medis lebih lanjut. Pertolongan pertama melibatkan keterampilan sederhana seperti pemulihan nafas dan penanganan luka. Kemampuan memberikan pertolongan pertama penting dalam respons cepat terhadap keadaan darurat, memberikan bantuan kritis sebelum bantuan medis profesional tersedia.
+            Medis melibatkan ilmu pengobatan dan perawatan kesehatan, sementara pertolongan pertama adalah serangkaian tindakan darurat untuk menyelamatkan nyawa atau mencegah kondisi memburuk sebelum bantuan medis lebih lanjut. Pertolongan pertama melibatkan keterampilan sederhana seperti pemulihan nafas dan penanganan luka. Kemampuan memberikan pertolongan pertama penting dalam respons cepat terhadap keadaan darurat, memberikan bantuan kritis sebelum bantuan medis profesional tersedia.
           </Typography>
         </Grid>
 
@@ -27,8 +27,8 @@ const BaseMedical = () => {
         <Grid item xs={12} md={6}>
           <Grid container justifyContent="center" alignItems="center" sx={{ p: 2 }}>
             <img
-              src="BencanaTitle.png"
-              alt="gambar-bencana"
+              src="MedisTitle.png"
+              alt="gambar-medis"
               style={{ maxWidth: '100%', height: 'auto' }}
             />
           </Grid>
@@ -50,19 +50,23 @@ const BaseMedical = () => {
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: isSmallScreen ? 'flex-start' : 'flex-start', marginRight: isSmallScreen ? 0 : 'auto', mb: isSmallScreen ? 1 : 0 }}>
-          <Typography variant="body1" style={{ color: "#6D107D" }}>SEGERA LAPORKAN BILA TERJADI BENCANA</Typography>
-          <Typography variant="body2" style={{ color: "#6D107D" }}>Lakukanlah pelaporan bila terjadi kebakaran sesuai dengan prosedurnya, dan petugas akan datang secepatnya.</Typography>
+          <Typography variant="body1" style={{ color: "#2E7D32" }}>SEGERA LAPORKAN BILA MEMBUTUHKAN BANTUAN MEDIS: Hubungi 118 / 119</Typography>
+          <Typography variant="body2" style={{ color: "#2E7D32" }}>Lakukanlah pelaporan bila terjadi hal yang membutuhkan tindakan medis. Petugas akan datang secepatnya.</Typography>
         </Box>
         {!isSmallScreen && (
-          <Button variant="contained" style={{ backgroundColor: "#9C27B0" }}>
-            Laporkan
-          </Button>
+          <Link href="/dokter">
+            <Button variant="contained" style={{ backgroundColor: "#2E7D32" }}>
+              Cek Dokter
+            </Button>
+          </Link>
         )}
         {/* Render the button underneath texts for mobile */}
         {isSmallScreen && (
-          <Button variant="contained" style={{ backgroundColor: "#9C27B0" }}>
-            Laporkan
+          <Link href="/dokter">
+          <Button variant="contained" style={{ backgroundColor: "#2E7D32" }}>
+            Cek Dokter
           </Button>
+        </Link>
         )}
       </Box>
 
@@ -73,13 +77,13 @@ const BaseMedical = () => {
           <Card>
             {/* Change Card Title into Image */}
             <img
-              src="BencanaCard.png"  // Replace with your image URL
+              src="MedisCard.png"  // Replace with your image URL
               alt="card-image"
               style={{ width: '100%', height: 'auto' }}
             />
             <CardContent>
               {/* Add content for the card */}
-              <Typography variant="body1">Card Content</Typography>
+              <Typography variant="body1">Simulasi Pertolongan Pertama</Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -87,20 +91,35 @@ const BaseMedical = () => {
         {/* Right side - List of Chips */}
         <Grid item xs={12} md={6}>
           <List>
-            <Typography variant="h4">Langkah Pelaporan</Typography>
+            <Typography variant="h4">Pertolongan Pertama</Typography>
             <ListItem>
               <ListItemText>
-                <Chip label="Category 1" style={chipStyle} />
+                <Chip label="Panggil bantuan medis" style={chipStyle} />
               </ListItemText>
             </ListItem>
             <ListItem>
               <ListItemText>
-                <Chip label="Category 2" style={chipStyle} />
+                <Chip label="Evaluasi keadaan korban" style={chipStyle} />
               </ListItemText>
             </ListItem>
             <ListItem>
               <ListItemText>
-                <Chip label="Category 3"  style={chipStyle} />
+                <Chip label="Berikan CPR jika diperlukan" style={chipStyle} />
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>
+                <Chip label="Hentikan pendarahan" style={chipStyle} />
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>
+                <Chip label="Berikan pertolongan sesuai kondisi" style={chipStyle} />
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>
+                <Chip label="Hubungi dokter yang tersedia" style={chipStyle} />
               </ListItemText>
             </ListItem>
             {/* Add more ListItem components for additional chips */}
