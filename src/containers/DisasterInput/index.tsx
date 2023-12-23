@@ -104,6 +104,15 @@ const DisasterInput = () => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
+
+      const requiredFields = ['disasterTitle', 'description', 'donationLink', 'location', 'uploadedImageUrl'];
+      const missingFields = requiredFields.filter(field => !(formData[field as keyof FormData]));
+
+      if (missingFields.length > 0) {
+        // If any required field is empty, show error notification and return
+        showNotification('error', 'Harap isi semua kolom wajib', 'Harap isi semua kolom wajib');
+        return;
+      }
       const token = localStorage.getItem('token');
       const decoded = jwt_decode<DecodedToken>(token!);
 
@@ -131,12 +140,12 @@ const DisasterInput = () => {
       // Handle the response, show success message, etc.
       console.log('Server Response:', response.data);
       showNotification('success', 'Laporan berhasil disampaikan!', 'Terima kasih atas laporannya');
+      navigate('/laporkan')
     } catch (error) {
       console.error('Error submitting form:', error);
       showNotification('error', 'Gagal mengirim laporan!', 'Terjadi kesalahan saat mengirim data');
     } finally {
       setLoading(false);
-      navigate('/laporkan')
     }
   };
 
